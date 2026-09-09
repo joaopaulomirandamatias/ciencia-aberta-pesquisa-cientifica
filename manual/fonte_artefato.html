@@ -1,0 +1,1572 @@
+<meta charset="utf-8">
+<title>MirandasTech · Pré-registro e ciência aberta com OSF e Zenodo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+
+:root{
+  --paper:#F1F4F7; --surface:#FFFFFF; --surface-2:#F8FAFB;
+  --ink:#101720; --ink-2:#4A5866; --ink-3:#75828E;
+  --rule:#D3DAE1; --rule-2:#E5EAEF;
+  --blueprint:#17436B; --blueprint-2:#2C6396; --blueprint-soft:#E4EDF5;
+  --signal:#C4530E; --signal-soft:#FBEADD;
+  --go:#186B50; --go-soft:#E0EFE9;
+  --stop:#A0231C; --stop-soft:#F9E5E3;
+  --amber:#8A6000; --amber-soft:#F9EFD6;
+  --shadow:0 1px 2px rgba(16,23,32,.06),0 8px 24px -12px rgba(16,23,32,.18);
+  --serif:'Spectral',Georgia,'Times New Roman',serif;
+  --cond:'IBM Plex Sans Condensed','Helvetica Neue',Arial,sans-serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1218; --surface:#131B23; --surface-2:#182129;
+    --ink:#E3E9EF; --ink-2:#94A3B1; --ink-3:#71808E;
+    --rule:#26313C; --rule-2:#1E2831;
+    --blueprint:#7DB2DF; --blueprint-2:#A3CAEB; --blueprint-soft:#15283A;
+    --signal:#EE8A46; --signal-soft:#33200F;
+    --go:#54C398; --go-soft:#0F2620;
+    --stop:#EC7B72; --stop-soft:#2D1614;
+    --amber:#DCAC3D; --amber-soft:#2A2110;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1218; --surface:#131B23; --surface-2:#182129;
+  --ink:#E3E9EF; --ink-2:#94A3B1; --ink-3:#71808E;
+  --rule:#26313C; --rule-2:#1E2831;
+  --blueprint:#7DB2DF; --blueprint-2:#A3CAEB; --blueprint-soft:#15283A;
+  --signal:#EE8A46; --signal-soft:#33200F;
+  --go:#54C398; --go-soft:#0F2620;
+  --stop:#EC7B72; --stop-soft:#2D1614;
+  --amber:#DCAC3D; --amber-soft:#2A2110;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+:focus-visible{outline:2px solid var(--blueprint-2);outline-offset:3px;border-radius:2px}
+
+/* ---------- sections ---------- */
+.part{padding-top:56px}
+.part-head{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--rule);padding-top:14px;margin-bottom:8px}
+.part-num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--signal);font-weight:600}
+.part-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h2{font-family:var(--cond);font-weight:700;font-size:clamp(27px,3.6vw,38px);line-height:1.12;letter-spacing:-.012em;margin:6px 0 0;text-wrap:balance;max-width:22ch}
+h3{font-family:var(--cond);font-weight:600;font-size:22px;line-height:1.25;margin:40px 0 0;color:var(--ink);text-wrap:balance}
+h4{font-family:var(--cond);font-weight:600;font-size:17px;line-height:1.3;margin:26px 0 0;color:var(--blueprint);letter-spacing:.01em}
+p,ul,ol{max-width:68ch}
+p{margin:14px 0 0}
+ul,ol{margin:14px 0 0;padding-left:22px}
+li{margin:7px 0}
+li::marker{color:var(--blueprint)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--blueprint);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+code{font-family:var(--mono);font-size:.855em;background:var(--surface-2);border:1px solid var(--rule-2);padding:1px 5px;border-radius:3px;color:var(--ink)}
+.dek{font-size:18px;color:var(--ink-2);max-width:64ch;margin:16px 0 0;line-height:1.6}
+
+/* ---------- blocks ---------- */
+.rule-box,.trap,.case,.note{margin:24px 0 0;padding:16px 20px;border-radius:4px;max-width:74ch;border-left:3px solid}
+.rule-box{background:var(--blueprint-soft);border-left-color:var(--blueprint)}
+.trap{background:var(--signal-soft);border-left-color:var(--signal)}
+.case{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--go)}
+.note{background:var(--surface-2);border-left-color:var(--ink-3)}
+.blabel{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:7px}
+.rule-box .blabel{color:var(--blueprint)}
+.trap .blabel{color:var(--signal)}
+.case .blabel{color:var(--go)}
+.note .blabel{color:var(--ink-3)}
+.rule-box p:first-of-type,.trap p:first-of-type,.case p:first-of-type,.note p:first-of-type{margin-top:0}
+.rule-box p,.trap p,.case p,.rule-box li,.trap li,.case li,.note p,.note li{max-width:none;font-size:16px}
+.case .src{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px;display:block;line-height:1.5}
+
+/* ---------- figures ---------- */
+figure{margin:34px 0 0;max-width:none}
+figcaption{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);margin-top:11px;line-height:1.5;max-width:76ch}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-right:7px}
+.frame{border:1px solid var(--rule);background:var(--surface);border-radius:4px;padding:24px;overflow-x:auto}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:26px 0 0;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--cond);font-size:14.5px;min-width:520px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--rule);background:var(--surface-2);vertical-align:bottom}
+td{padding:11px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top;line-height:1.45;color:var(--ink)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap}
+td.mono{font-family:var(--mono);font-size:12.5px}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;font-weight:600;text-transform:uppercase;padding:2.5px 8px;border-radius:20px;white-space:nowrap}
+.p-go{background:var(--go-soft);color:var(--go)}
+.p-amber{background:var(--amber-soft);color:var(--amber)}
+.p-stop{background:var(--stop-soft);color:var(--stop)}
+.p-blue{background:var(--blueprint-soft);color:var(--blueprint)}
+
+/* ---------- terminal ---------- */
+.term{background:#0B1219;border:1px solid #223040;border-radius:5px;overflow:hidden;margin:26px 0 0}
+.term-bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#141F2B;border-bottom:1px solid #223040}
+.term-dot{width:9px;height:9px;border-radius:50%;background:#33445A}
+.term-title{font-family:var(--mono);font-size:10.5px;color:#7A8B9C;margin-left:8px;letter-spacing:.05em}
+.term pre{margin:0;padding:15px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.62;color:#C9D6E2}
+.term .c-p{color:#5FA8DC}
+.term .c-o{color:#E8A055}
+.term .c-g{color:#5FC79A}
+.term .c-m{color:#71828F}
+.term .c-r{color:#E8776C}
+
+/* ---------- code ---------- */
+.code{background:var(--surface-2);border:1px solid var(--rule);border-radius:4px;margin:24px 0 0;overflow:hidden}
+.code-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);padding:8px 14px;border-bottom:1px solid var(--rule);background:var(--surface)}
+.code pre{margin:0;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.66;color:var(--ink)}
+.code .k{color:var(--blueprint);font-weight:500}
+.code .s{color:var(--go)}
+.code .cm{color:var(--ink-3);font-style:italic}
+
+/* ---------- charts ---------- */
+.bars{display:flex;flex-direction:column;gap:11px;margin:0}
+.bar-row{display:grid;grid-template-columns:minmax(96px,152px) minmax(0,1fr) 62px;gap:12px;align-items:center}
+.bar-lab{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);line-height:1.25;text-align:right}
+.bar-track{background:var(--rule-2);border-radius:2px;height:22px;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;background:var(--blueprint)}
+.bar-fill.f-signal{background:var(--signal)}
+.bar-fill.f-go{background:var(--go)}
+.bar-fill.f-stop{background:var(--stop)}
+.bar-fill.f-amber{background:var(--amber)}
+.bar-fill.f-mute{background:var(--ink-3)}
+.bar-val{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;font-weight:500}
+.bar-zero{font-family:var(--mono);font-size:11px;color:var(--stop);font-weight:600;position:absolute;left:4px;top:50%;transform:translateY(-50%)}
+@media (max-width:560px){.bar-row{grid-template-columns:minmax(72px,102px) minmax(0,1fr) 52px;gap:8px}.bar-lab{font-size:12px}}
+
+/* funnel */
+.funnel{display:flex;flex-direction:column;gap:8px;align-items:center}
+.fstep{border:1px solid var(--rule);background:var(--surface-2);border-radius:4px;padding:12px 18px;text-align:center;width:100%;max-width:640px;position:relative}
+.fstep .fn{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.fstep .ft{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);margin-top:5px;line-height:1.35}
+.fstep.hl{border-color:var(--signal);background:var(--signal-soft)}
+.fstep.hl .fn{color:var(--signal)}
+.fdrop{font-family:var(--mono);font-size:11.5px;color:var(--stop);text-align:center;line-height:1.4}
+
+/* flow map */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px}
+.node{border:1px solid var(--rule);border-radius:4px;background:var(--surface-2);padding:12px 13px;display:flex;flex-direction:column;gap:6px}
+.node .nn{font-family:var(--mono);font-size:10px;letter-spacing:.11em;color:var(--ink-3);font-weight:600}
+.node .nt{font-family:var(--cond);font-size:15px;font-weight:600;line-height:1.22;color:var(--ink)}
+.node .nd{font-size:13px;color:var(--ink-2);line-height:1.45;font-family:var(--cond)}
+.node .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.node.gate{border-color:var(--stop);background:var(--stop-soft)}
+.node.gate .nn{color:var(--stop)}
+
+/* two-column compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--surface)}
+.compare>div{padding:18px 20px}
+.compare>div:first-child{border-right:1px solid var(--rule)}
+.cmp-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.compare ul{margin:0;padding-left:18px;max-width:none}
+.compare li{font-family:var(--cond);font-size:14.5px;line-height:1.45;margin:8px 0;color:var(--ink)}
+@media (max-width:640px){.compare{grid-template-columns:1fr}.compare>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* ui schematic */
+.ui{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);font-family:var(--cond)}
+.ui-bar{background:var(--surface-2);border-bottom:1px solid var(--rule);padding:7px 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center}
+.ui-body{display:grid;grid-template-columns:170px minmax(0,1fr);min-height:150px}
+.ui-side{border-right:1px solid var(--rule);padding:10px;background:var(--surface-2);font-size:13px;color:var(--ink-2)}
+.ui-side div{padding:3.5px 6px;border-radius:3px;line-height:1.3}
+.ui-side div.sel{background:var(--blueprint-soft);color:var(--blueprint);font-weight:600}
+.ui-main{padding:10px}
+.ui-row{display:grid;grid-template-columns:minmax(0,1fr) 78px 46px;gap:9px;padding:6px 7px;border-bottom:1px solid var(--rule-2);font-size:13px;align-items:center;color:var(--ink)}
+.ui-row.head{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.ui-row span:nth-child(2),.ui-row span:nth-child(3){font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.schematic-tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);border:1px dashed var(--rule);padding:2px 7px;border-radius:3px}
+@media (max-width:560px){.ui-body{grid-template-columns:1fr}.ui-side{border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* checklist */
+.check{border:1px solid var(--rule);border-radius:4px;background:var(--surface);overflow:hidden}
+.check-item{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--rule-2)}
+.check-item:last-child{border-bottom:0}
+.check-item input{margin:4px 0 0;width:16px;height:16px;accent-color:var(--blueprint);flex:none;cursor:pointer}
+.check-item label{font-family:var(--cond);font-size:14.5px;line-height:1.45;cursor:pointer;color:var(--ink)}
+.check-item label b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:2px}
+.check-item.done label{color:var(--ink-3);text-decoration:line-through}
+.check-foot{padding:10px 16px;background:var(--surface-2);border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.check-foot button{font-family:var(--mono);font-size:10.5px;background:none;border:1px solid var(--rule);color:var(--ink-2);padding:3px 10px;border-radius:3px;cursor:pointer;letter-spacing:.05em}
+.check-foot button:hover{border-color:var(--blueprint);color:var(--blueprint)}
+
+/* refs */
+.refs{margin:14px 0 0;padding-left:30px;list-style:decimal;max-width:none}
+.refs li{display:list-item;padding:6px 0 6px 4px;border-bottom:1px solid var(--rule-2);margin:0;font-family:var(--cond);font-size:13.5px;line-height:1.4}
+.refs li::marker{font-family:var(--mono);font-size:11px;color:var(--signal);font-weight:600}
+.refs li a{overflow-wrap:anywhere;font-family:var(--mono);font-size:11px;display:inline-block;margin-top:2px;color:var(--ink-3);text-decoration:none}
+.refs li a:hover{color:var(--blueprint);text-decoration:underline}
+.refs .rt{color:var(--ink);font-weight:500}
+
+.colophon{margin-top:70px;padding-top:22px;border-top:3px solid var(--blueprint);font-family:var(--mono);font-size:11.5px;color:var(--ink-3);line-height:1.75}
+.kicker{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin:36px 0 0;display:block;font-weight:600}
+
+
+
+/* ================= motor de slides ================= */
+html{scroll-snap-type:y proximity;scroll-behavior:smooth}
+body{margin:0}
+.slide{height:100vh;min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-start;padding:26px clamp(64px,6vw,96px) 26px;font-size:15.5px;overflow:hidden;position:relative;border-bottom:1px solid var(--rule-2);background:var(--paper)}
+.slide.alt{background:var(--surface-2)}
+.slide .inner{max-width:none;width:100%;margin:0;max-height:calc(100vh - 52px);overflow:auto;scrollbar-width:thin}
+.slide.fit .inner{overflow:visible}
+.slide h2{max-width:none;font-size:clamp(24px,3.2vw,38px);margin-top:6px}
+.slide .lead{font-size:clamp(15.5px,1.35vw,18px);color:var(--ink-2);max-width:none;margin:10px 0 0;line-height:1.5}
+.slide p,.slide ul,.slide ol,.slide .rule-box,.slide .trap,.slide .case,.slide .note,.slide .more,.slide figcaption,.slide .check,.slide .refs,.slide h2{max-width:none}
+.two{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(16px,2.4vw,34px);align-items:start;margin-top:16px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.two figure,.two .tw,.two .code,.two .term{margin-top:0}
+.kicker-part{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);font-weight:600}
+.kicker-part span{color:var(--ink-3);font-weight:400;margin-left:10px}
+.more{margin-top:16px;max-width:76ch;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+.more summary{cursor:pointer;font-family:var(--cond);font-weight:600;font-size:14px;padding:10px 14px;color:var(--blueprint);list-style:none;display:flex;align-items:center;gap:8px}
+.more summary::before{content:"+";font-family:var(--mono);width:16px;display:inline-block;text-align:center}
+.more[open] summary::before{content:"–"}
+.more>div{padding:0 16px 14px;font-size:15.5px}
+.more>div p,.more>div li{max-width:none;font-size:15.5px}
+.more .tw{margin-top:10px}
+.bul{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:9px}
+.bul li{position:relative;padding-left:24px;font-size:15.5px;line-height:1.5;margin:0}
+.bul li::before{content:"";position:absolute;left:4px;top:9px;width:10px;height:10px;border-radius:2px;background:var(--blueprint)}
+.bul li.warn::before{background:var(--signal)}
+.bul li.stop::before{background:var(--stop)}
+.bul li.go::before{background:var(--go)}
+
+/* capa */
+.slide.cover{justify-content:center;background:var(--paper)}
+.slide.divider{justify-content:center}
+.brand{font-family:var(--cond);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--blueprint);display:inline-flex;align-items:center;gap:10px}
+.brand::before{content:"";width:22px;height:2px;background:var(--signal)}
+.cover h1{font-family:var(--cond);font-weight:700;font-size:clamp(42px,7.2vw,88px);line-height:.98;letter-spacing:-.02em;margin:22px 0 0;text-wrap:balance;max-width:none}
+.cover .lede{font-size:clamp(18px,1.9vw,23px);color:var(--ink-2);max-width:none;margin:22px 0 0;line-height:1.55}
+.cover-meta{margin-top:34px;display:flex;flex-wrap:wrap;gap:24px 40px;font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+.cover-meta b{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;font-weight:600}
+.cover-meta span{font-family:var(--cond);font-size:15px;color:var(--ink);letter-spacing:0}
+.hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.hint::after{content:"↓";animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* separador de parte */
+.slide.divider{justify-content:center;background:var(--blueprint);color:#F1F4F7;border-bottom:0}
+.slide.divider .kicker-part{color:#F4B07A}
+.slide.divider .kicker-part span{color:rgba(241,244,247,.6)}
+.slide.divider h2{color:#FFFFFF;font-size:clamp(40px,6vw,74px);max-width:none}
+.slide.divider p{color:rgba(241,244,247,.82);font-size:clamp(17px,1.7vw,21px);max-width:none}
+.slide.divider .num{font-family:var(--mono);font-size:clamp(90px,16vw,200px);font-weight:600;color:rgba(255,255,255,.08);position:absolute;right:4vw;bottom:-2vw;line-height:1;letter-spacing:-.04em;pointer-events:none}
+
+/* barra fixa, progresso, navegação */
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,3vw,28px);background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);z-index:40}
+.topbar .brand{font-size:12px}
+.topbar .where{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;display:flex;align-items:center;gap:12px}
+.topbar .where b{color:var(--ink);font-weight:600}
+.prog{position:fixed;top:0;left:0;height:3px;background:var(--signal);width:0;z-index:41;transition:width .25s ease}
+.navbtn{position:fixed;left:clamp(8px,1.2vw,18px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:40;align-items:center;opacity:.28;transition:opacity .25s ease}
+.navbtn:hover,.navbtn:focus-within{opacity:1}
+@media (hover:none){.navbtn{opacity:.85}}
+.navbtn .cnt{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.04em;margin-top:2px}
+.navbtn .cnt b{color:var(--ink)}
+.navbtn button,.menubtn{font-family:var(--mono);font-size:13px;width:42px;height:42px;border-radius:4px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);display:inline-flex;align-items:center;justify-content:center}
+.navbtn button:hover,.menubtn:hover{border-color:var(--blueprint);color:var(--blueprint)}
+.menubtn{font-size:16px}
+.menu{position:fixed;inset:0 auto 0 0;width:min(360px,92vw);background:var(--surface);border-right:1px solid var(--rule);box-shadow:var(--shadow);z-index:45;overflow-y:auto;padding:14px 10px 40px;transform:translateX(-102%);transition:transform .28s ease}
+.menu.open{transform:none}
+.menu .grp{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:14px 10px 4px;border-top:1px solid var(--rule-2);margin-top:6px}
+.menu .grp:first-child{border-top:0;margin-top:0}
+.menu a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink-2);font-family:var(--cond);font-size:14px;padding:6px 10px;border-radius:3px;border-left:2px solid transparent}
+.menu a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);min-width:20px;font-variant-numeric:tabular-nums}
+.menu a:hover{background:var(--blueprint-soft);color:var(--ink)}
+.menu a.on{border-left-color:var(--blueprint);color:var(--blueprint);background:var(--blueprint-soft);font-weight:600}
+.scrim{position:fixed;inset:0;background:rgba(16,23,32,.25);z-index:44;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+
+/* efeitos de entrada — estado de repouso legível; só deslocamento e leve fade */
+.rv{transform:translateY(16px);opacity:.55;transition:transform .55s cubic-bezier(.2,.7,.2,1),opacity .55s ease}
+.slide.in .rv{transform:none;opacity:1}
+.slide.in .rv:nth-child(2){transition-delay:.06s}.slide.in .rv:nth-child(3){transition-delay:.12s}.slide.in .rv:nth-child(4){transition-delay:.18s}.slide.in .rv:nth-child(5){transition-delay:.24s}.slide.in .rv:nth-child(6){transition-delay:.30s}
+.slide.cover .rv{transform:none;opacity:1}
+@media (prefers-reduced-motion:reduce){.rv{transform:none;opacity:1;transition:none}.hint::after{animation:none}.prog{transition:none}.menu{transition:none}}
+
+/* figuras leves */
+.shot{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.shot img{display:block;width:100%;height:auto}
+.sets{position:relative;height:250px;max-width:520px;margin:0 auto;font-family:var(--cond)}
+.sets div{position:absolute;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-size:13px;color:var(--ink-2);text-align:center;line-height:1.3}
+.sets .s1{inset:0;background:var(--surface-2)}
+.sets .s2{inset:12% 15% 8% 15%;background:var(--amber-soft);border-color:var(--amber)}
+.sets .s3{inset:38% 32% 14% 32%;background:var(--signal-soft);border-color:var(--signal);align-items:center;padding:0;font-weight:600;color:var(--signal)}
+.dec{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:20px}
+.dec div{border:1px solid var(--rule);border-radius:4px;padding:12px 14px;background:var(--surface)}
+.dec b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;margin-bottom:6px}
+.dec .h{border-left:3px solid var(--stop)}.dec .h b{color:var(--stop)}
+.dec .p{border-left:3px solid var(--amber)}.dec .p b{color:var(--amber)}
+.dec .m{border-left:3px solid var(--go)}.dec .m b{color:var(--go)}
+.dec ul{margin:0;padding-left:16px;max-width:none}
+.dec li{font-family:var(--cond);font-size:14px;line-height:1.4;margin:4px 0}
+
+/* impressão: um slide por página */
+@page{size:A4 landscape;margin:12mm}
+@media print{
+  html{scroll-snap-type:none}
+  body{background:#fff;color:#101720}
+  .prog,.navbtn,.menubtn,.menu,.scrim,.hint{display:none!important}
+  .slide{min-height:0;height:auto;break-after:page;padding:8mm 4mm;border:0;justify-content:flex-start;overflow:visible}
+  .slide .inner{max-height:none;overflow:visible;zoom:1!important}
+  .slide.divider{background:#17436B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rv{transform:none;opacity:1}
+  .more{display:block}.more>div{display:block}
+  .term{background:#0B1219!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rule-box,.trap,.case,.note,.pill,.bar-fill,.bar-track,.node,.dec div,.sets div{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .code pre,.term pre{white-space:pre-wrap;word-break:break-word}
+  a{color:inherit;text-decoration:none}
+}
+
+/* limites de altura: um slide por tela */
+.slide .tw{max-height:none;overflow:auto}
+.slide .tw table{font-size:13.5px}
+.slide .tw td,.slide .tw th{padding:8px 11px}
+.slide figure{margin-top:14px}
+.slide .shot img{max-height:34vh;width:auto;max-width:100%;margin:0 auto}
+.slide .code pre,.slide .term pre{max-height:none;overflow:auto;font-size:12px}
+.slide .rule-box,.slide .trap,.slide .case,.slide .note{margin-top:14px;padding:12px 16px}
+.slide .rule-box p,.slide .trap p,.slide .case p,.slide .note p{font-size:14.5px}
+.slide ol,.slide ul{margin-top:10px}
+.slide li{margin:5px 0;font-size:15px}
+.slide h4{margin-top:14px}
+.slide .check{max-height:none}
+.slide .refs{max-height:none}
+.slide .refs li{font-size:13px;padding:6px 0 6px 4px}
+.slide figcaption{font-size:12.5px;margin-top:8px}
+.slide .dec ul{padding-left:14px}.slide .dec li{font-size:13.5px}
+.slide .frame{padding:16px}
+.slide .sets{height:210px}
+@media (max-height:760px){.slide .shot img{max-height:30vh}}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.three figure{margin:0}
+.three .shot img{max-height:none}
+@media (max-width:900px){.three{grid-template-columns:1fr}}
+.slide .node{padding:9px 11px;gap:4px}.slide .node .nt{font-size:14px}.slide .node .nd{font-size:12px}
+
+/* ================= celular e tablet ================= */
+@media (max-width:900px){
+  html{scroll-snap-type:none}
+  .slide{height:auto;min-height:0;overflow:visible;padding:26px 16px 30px;scroll-snap-align:none;font-size:15px}
+  .slide .inner{max-height:none;overflow:visible;zoom:1!important}
+  .slide.cover,.slide.divider{min-height:72vh;padding:40px 18px}
+  .cover h1{font-size:clamp(38px,11vw,60px)}
+  .cover .lede{font-size:17px}
+  .cover-meta{gap:14px 24px}
+  .hint{display:none}
+  .slide h2{font-size:clamp(23px,6.4vw,30px)}
+  .slide .lead{font-size:15.5px}
+  .kicker-part span{display:block;margin-left:0;margin-top:2px}
+  .two,.three{grid-template-columns:minmax(0,1fr);gap:14px}
+  .slide{max-width:100vw;overflow-x:hidden}
+  .slide .inner{min-width:0}
+  .two>*,.three>*{min-width:0}
+  .slide .tw{max-height:none}
+  .slide .tw table{min-width:560px;font-size:13px}
+  .slide .shot img{max-height:none}
+  .slide .code pre,.slide .term pre{max-height:none;font-size:11.5px}
+  .slide .refs,.slide .check{max-height:none}
+  .compare{grid-template-columns:minmax(0,1fr)}.compare>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}
+  .dec{grid-template-columns:minmax(0,1fr)}
+  .flow{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .sets{height:200px}
+  .navbtn{left:auto;right:10px;top:auto;bottom:10px;transform:none;flex-direction:row;gap:6px;padding:6px;background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow)}
+  .navbtn button,.menubtn{width:38px;height:38px;box-shadow:none}
+  .navbtn .cnt{margin:0 4px 0 2px}
+  .menu{width:100vw;inset:0 0 0 0}
+  .slide.divider .num{font-size:24vw;right:2vw;bottom:-3vw}
+  .rule-box,.trap,.case,.note{padding:12px 14px}
+}
+@media (max-width:480px){
+  .slide{padding:22px 12px 26px}
+  .plate div,.cover-meta div{width:100%}
+  .bar-row{grid-template-columns:minmax(64px,90px) minmax(0,1fr) 46px;gap:6px}
+  .ui-body{grid-template-columns:1fr}.ui-side{border-right:0;border-bottom:1px solid var(--rule)}
+}
+.gl4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:14px}
+.gl{column-count:1}
+.gl{margin:0;font-family:var(--cond);font-size:12.5px;line-height:1.38;columns:2;column-gap:18px}
+.gl dt{break-inside:avoid}.gl dd{break-inside:avoid}
+@media (max-width:640px){.gl{columns:1}}
+.gl dt{font-weight:600;color:var(--blueprint);margin-top:7px}
+.gl dd{margin:1px 0 0;color:var(--ink-2)}
+
+@media (max-width:640px){.gl4{grid-template-columns:minmax(0,1fr)}}
+.menu-head{display:flex;justify-content:space-between;align-items:center;padding:8px 10px 10px;border-bottom:1px solid var(--rule);margin-bottom:6px}
+.menu-head button{font-family:var(--mono);font-size:20px;line-height:1;width:34px;height:34px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+.menu-head button:hover{border-color:var(--blueprint);color:var(--blueprint)}
+.modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:4vh 4vw;background:rgba(16,23,32,.45)}
+.modal.on{display:flex}
+.modal-box{background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow);max-width:1100px;width:100%;max-height:92vh;display:flex;flex-direction:column}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--cond);font-weight:600;font-size:15px;color:var(--blueprint)}
+.modal-head button{font-family:var(--mono);font-size:20px;line-height:1;width:34px;height:34px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+.modal-body{padding:14px 18px 20px;overflow:auto;font-size:15px}
+.modal-body p,.modal-body li{max-width:none;font-size:15px}
+.modal-body .tw{margin-top:10px}.modal-body .two{margin-top:8px}
+.modal-body .shot img{max-height:60vh;width:auto;max-width:100%}
+/* 4) botão de copiar */
+.code,.term{position:relative}
+.copy{position:absolute;top:6px;right:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:3px;border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);cursor:pointer;opacity:.75;z-index:2}
+.copy:hover{opacity:1;border-color:var(--blueprint);color:var(--blueprint)}
+.term .copy{background:#141F2B;border-color:#2B3B4C;color:#9FB1C2}
+.copy.ok{color:var(--go);border-color:var(--go)}
+.gterm{text-decoration:underline dotted var(--blueprint-2);text-decoration-thickness:1.5px;text-underline-offset:3px;cursor:help}
+.gterm:hover,.gterm:focus{background:var(--blueprint-soft);outline:none;border-radius:2px}
+.gpop{position:fixed;z-index:70;max-width:340px;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-left:3px solid var(--blueprint);border-radius:4px;box-shadow:var(--shadow);padding:10px 12px;font-family:var(--cond);font-size:13.5px;line-height:1.45;display:none;pointer-events:none}
+.gpop.on{display:block}
+.gpop b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blueprint);margin-bottom:4px}
+@media (hover:none){.gpop{pointer-events:auto}}
+.slide .check{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.slide .check .check-foot{grid-column:1/-1}
+.slide .check-item{border-right:1px solid var(--rule-2)}.slide .check-item:nth-child(even){border-right:0}
+.slide .refs{columns:2;column-gap:28px}.slide .refs li{break-inside:avoid}
+#s06 .tw td,#s06 .tw th{padding:6px 10px}
+@media (max-width:900px){.slide .check{grid-template-columns:minmax(0,1fr)}.slide .check-item{border-right:0}.slide .refs{columns:1}}
+
+/* extras deste manual */
+.gantt{display:grid;grid-template-columns:150px repeat(12,minmax(0,1fr));gap:4px 0;font-family:var(--cond);font-size:12.5px;align-items:center}
+.gantt .gl{padding-right:8px;color:var(--ink-2);text-align:right}
+.gantt .gm{font-family:var(--mono);font-size:10px;color:var(--ink-3);text-align:center;border-bottom:1px solid var(--rule);padding-bottom:3px}
+.gantt .gb{height:14px;border-radius:2px;background:var(--blueprint);margin:3px 1px}
+.gantt .gb.s{background:var(--signal)}.gantt .gb.g{background:var(--go)}.gantt .gb.a{background:var(--amber)}
+.cycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.cycle .node{align-items:center;text-align:center}
+.struct{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.struct>div{border:1px solid var(--rule);border-radius:4px;background:var(--surface);padding:10px 12px}
+.struct h5{margin:0 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--blueprint)}
+.struct ol,.struct ul{margin:0;padding-left:16px}.struct li{font-family:var(--cond);font-size:13px;line-height:1.35;margin:2px 0}
+@media (max-width:900px){.struct{grid-template-columns:minmax(0,1fr)}.gantt{grid-template-columns:110px repeat(12,minmax(0,1fr))}}
+
+/* lupa: clique na captura para ampliar */
+.shot img{cursor:zoom-in}
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,14,20,.88);display:none;align-items:center;justify-content:center;padding:3vh 3vw;cursor:zoom-out}
+.lightbox.on{display:flex}
+.lightbox img{max-width:94vw;max-height:88vh;width:auto;height:auto;border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.6);background:#fff}
+.lightbox figcaption{position:absolute;left:50%;bottom:1.6vh;transform:translateX(-50%);max-width:90vw;font-family:var(--cond);font-size:13.5px;color:#E3E9EF;text-align:center;line-height:1.4;padding:6px 12px;background:rgba(10,14,20,.6);border-radius:4px}
+.lightbox .lb-close{position:absolute;top:12px;right:14px;width:40px;height:40px;border-radius:4px;border:1px solid rgba(255,255,255,.3);background:rgba(10,14,20,.5);color:#fff;font:20px/1 var(--mono);cursor:pointer}
+.lightbox .lb-hint{position:absolute;top:18px;left:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+@media print{.lightbox{display:none!important}}
+</style>
+<div class="prog" id="prog"></div>
+<div class="scrim" id="scrim"></div>
+<div class="gpop" id="gpop" role="tooltip"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="modal-box"><div class="modal-head"><span id="modal-title">detalhes</span><button type="button" id="modal-close" aria-label="Fechar">×</button></div><div class="modal-body" id="modal-body"></div></div></div>
+<nav class="menu" id="menu" aria-label="Sumário"><div class="menu-head"><span class="brand">MirandasTech</span><button type="button" id="menuclose" aria-label="Fechar sumário">×</button></div><div id="menulist"></div></nav>
+<div class="navbtn"><button class="menubtn" id="menubtn" aria-label="Abrir sumário">☰</button><button id="prev" aria-label="Slide anterior">↑</button><button id="next" aria-label="Próximo slide">↓</button><span class="cnt"><b id="cur">1</b>/<span id="tot">–</span></span></div>
+
+
+<main id="deck">
+<!-- ===================== CAPA ===================== -->
+<section class="slide cover" id="s00" data-title="Capa">
+  <div class="inner">
+    <span class="brand rv">MirandasTech · Manual profissional</span>
+    <h1 class="rv">Pré-registro e ciência aberta com OSF e Zenodo</h1>
+    <p class="lede rv">Registrar o plano antes de coletar, cuidar dos dados com um plano de gestão, e depositar dados, código e preprint com DOI: OSF, AsPredicted, PROSPERO e ReBEC para o registro; Zenodo para o depósito; SciELO Preprints e arXiv para o preprint; licenças Creative Commons, princípios FAIR e ORCID — <strong>com serviços gratuitos, saídas reais de terminal e cada fato datado</strong>.</p>
+    <div class="cover-meta rv">
+      <div><b>Série</b><span>Manuais MirandasTech · pesquisa científica</span></div>
+      <div><b>Versão</b><span>1.0 · setembro de 2026</span></div>
+      <div><b>Formato</b><span><span id="nslides">–</span> slides</span></div>
+      <div><b>Licença</b><span>CC BY 4.0 — cite a fonte</span></div>
+    </div>
+  </div>
+  <div class="hint">role para começar</div>
+</section>
+
+<section class="slide" id="s01" data-title="Para quem é e o que você vai aprender">
+  <div class="inner">
+    <div class="kicker-part rv">Como usar<span>cada slide é um passo que você executa no navegador ou no terminal — e o registro é sempre seu</span></div>
+    <h2 class="rv">Para quem é — e o que você vai saber fazer ao final</h2>
+    <p class="lead rv">Este manual é para <strong>pós-graduandos que vão coletar dados, fazer uma revisão ou publicar um artigo</strong> e querem que o plano, os dados e o texto sejam verificáveis por outras pessoas. Ele ensina a pré-registrar (escrever o plano antes de ver os dados e guardá-lo num <span class="gterm" tabindex="0" data-t="Registro (registry)" data-d="O serviço que guarda o plano com data e o torna imutável: OSF Registries, AsPredicted, PROSPERO, ReBEC.">registro</span> com data), a depositar dados e código num repositório que emite <span class="gterm" tabindex="0" data-t="DOI" data-d="Digital Object Identifier: identificador persistente; no Zenodo, emitido pela DataCite ao publicar; no OSF, ao aprovar o registro.">DOI</span> e a publicar um <span class="gterm" tabindex="0" data-t="Preprint · postprint" data-d="Preprint: o manuscrito antes da revisão por pares, com DOI e data; postprint: a versão aceita, sem a diagramação da editora.">preprint</span>. Não exige programação: os três scripts estão prontos e a saída ao lado é a saída real de uma sessão de terminal de 09/09/2026. O manual <strong>não fez login em nenhum serviço</strong>: nenhum <span class="gterm" tabindex="0" data-t="Registro (registry)" data-d="O serviço que guarda o plano com data e o torna imutável: OSF Registries, AsPredicted, PROSPERO, ReBEC.">registro</span>, projeto, depósito ou <span class="gterm" tabindex="0" data-t="Preprint · postprint" data-d="Preprint: o manuscrito antes da revisão por pares, com DOI e data; postprint: a versão aceita, sem a diagramação da editora.">preprint</span> foi criado; as páginas públicas aparecem em capturas e o que exige conta é descrito pela documentação oficial, com os nomes exatos dos botões.</p>
+    <div class="two rv">
+      <div>
+        <h4>Ao final, você vai conseguir</h4>
+        <ul class="bul">
+          <li><strong>Explicar</strong> o que é <span class="gterm" tabindex="0" data-t="Ciência aberta" data-d="«Conjunto de princípios e práticas que visam tornar a pesquisa científica de todas as áreas acessível a todos» (UNESCO, 2021): conhecimento aberto, infraestruturas, engajamento social e diálogo com outros saberes.">ciência aberta</span> (UNESCO), por que pré-registrar (COS), o que é um <span class="gterm" tabindex="0" data-t="Registered Report" data-d="Formato de artigo em que o protocolo é revisado por pares antes de os resultados serem conhecidos; Stage 1 → aceitação em princípio → Stage 2 («mais de 300 periódicos»).">Registered Report</span> e o que as <span class="gterm" tabindex="0" data-t="TOP Guidelines" data-d="Transparency and Openness Promotion: sete práticas em três níveis (Disclose, Share and Cite, Certify), do COS; TOP 2025.">TOP Guidelines</span> pedem.</li>
+          <li><strong>Pré-registrar</strong> no <span class="gterm" tabindex="0" data-t="OSF" data-d="Open Science Framework, do Center for Open Science: projetos, registros com DOI e preprints; gratuito; região de armazenamento fixa na criação.">OSF</span>, no AsPredicted, no <span class="gterm" tabindex="0" data-t="PROSPERO" data-d="Registro internacional de revisões sistemáticas com desfechos em saúde (CRD, York); gratuito, logado, antes da extração; mais de 495.000 revisões.">PROSPERO</span> (revisões) ou no <span class="gterm" tabindex="0" data-t="ReBEC" data-d="Registro Brasileiro de Ensaios Clínicos (Fiocruz, Ministério da Saúde, OPAS, Anvisa): estudos com seres humanos no Brasil; integra a ICTRP da OMS.">ReBEC</span> (estudos com pessoas no Brasil) — com o rascunho gerado pelo <code>preregistro.py</code>.</li>
+          <li><strong>Planejar</strong> os dados: <span class="gterm" tabindex="0" data-t="PGD (plano de gestão de dados)" data-d="Documento do projeto com o que será coletado, documentado, protegido, guardado, compartilhado e por quem; DMP em inglês; sete seções no plano_gestao_dados.py.">plano de gestão de dados</span> (<code>plano_gestao_dados.py</code>), <span class="gterm" tabindex="0" data-t="LGPD" data-d="Lei Geral de Proteção de Dados: dado pessoal só com base legal e finalidade; anonimizado de forma irreversível deixa de ser pessoal.">LGPD</span> e <span class="gterm" tabindex="0" data-t="TCLE" data-d="Termo de Consentimento Livre e Esclarecido: o que o participante autorizou, inclusive o que pode ser compartilhado.">TCLE</span>, princípios <span class="gterm" tabindex="0" data-t="FAIR" data-d="Findable, Accessible, Interoperable, Reusable (Wilkinson et al., 2016): identificador persistente, metadados ricos, protocolo aberto, formatos e vocabulários abertos, licença e proveniência.">FAIR</span>, <span class="gterm" tabindex="0" data-t="Licença CC" data-d="Creative Commons: BY, BY-SA, BY-NC, BY-ND, BY-NC-SA, BY-NC-ND e CC0 (domínio público); este manual recomenda CC BY 4.0 para texto e dados.">licença CC</span>.</li>
+          <li><strong>Depositar</strong> no <span class="gterm" tabindex="0" data-t="Zenodo" data-d="Repositório generalista do CERN com o OpenAIRE: gratuito, 50 GB por registro, 100 arquivos por upload, DOI ao publicar, arquivos mutáveis por 45 dias.">Zenodo</span>: campos obrigatórios, «Reserve <span class="gterm" tabindex="0" data-t="DOI" data-d="Digital Object Identifier: identificador persistente; no Zenodo, emitido pela DataCite ao publicar; no OSF, ao aprovar o registro.">DOI</span>», «Publish», versões e <span class="gterm" tabindex="0" data-t="DOI de conceito" data-d="No Zenodo, o DOI que representa todas as versões e resolve para a mais recente; cite-o para «a obra».">DOI de conceito</span> × de versão — depois de o <code>deposito_zenodo.py</code> não achar bloqueio.</li>
+          <li><strong>Escolher</strong> o servidor de preprint, conferir a política do periódico (<span class="gterm" tabindex="0" data-t="Open policy finder" data-d="Índice da Jisc (sucessor do Sherpa Romeo) das políticas de acesso aberto dos periódicos e editoras.">Open policy finder</span>) e ligar tudo ao seu <span class="gterm" tabindex="0" data-t="ORCID" data-d="Open Researcher and Contributor ID: identificador persistente e gratuito da pessoa pesquisadora, usado por periódicos, agências, Zenodo e OSF.">ORCID</span>.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Nomes de menu e de botão são os das páginas públicas e das ajudas oficiais (help.<span class="gterm" tabindex="0" data-t="OSF" data-d="Open Science Framework, do Center for Open Science: projetos, registros com DOI e preprints; gratuito; região de armazenamento fixa na criação.">osf</span>.io, help.<span class="gterm" tabindex="0" data-t="Zenodo" data-d="Repositório generalista do CERN com o OpenAIRE: gratuito, 50 GB por registro, 100 arquivos por upload, DOI ao publicar, arquivos mutáveis por 45 dias.">zenodo</span>.org, cos.io, crd.york.ac.uk/<span class="gterm" tabindex="0" data-t="PROSPERO" data-d="Registro internacional de revisões sistemáticas com desfechos em saúde (CRD, York); gratuito, logado, antes da extração; mais de 495.000 revisões.">prospero</span>, aspredicted.org) observadas em 09/09/2026; quando a sua tela divergir, vale a tela. As saídas de terminal são reais, com o caminho trocado por <code>/home/usuario</code> e uma autora fictícia, «Aluna Exemplo».</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Registrar depois de olhar os dados.</strong> O <span class="gterm" tabindex="0" data-t="Pré-registro" data-d="Especificar o plano de pesquisa antecipadamente e submetê-lo a um registro (COS); hipóteses, variáveis e análises antes de ver os dados.">pré-registro</span> só vale se for feito antes da coleta (estudo primário) ou antes da extração (revisão): «os mesmos dados não podem ser usados para gerar e testar uma hipótese» (COS). Um registro feito depois é um relato, não um <span class="gterm" tabindex="0" data-t="Pré-registro" data-d="Especificar o plano de pesquisa antecipadamente e submetê-lo a um registro (COS); hipóteses, variáveis e análises antes de ver os dados.">pré-registro</span>.</p></div>
+        <div class="note"><span class="blabel">Manuais irmãos</span><p>Este manual cuida do <em>registro e do depósito</em>. O projeto vem do manual de <a href="https://metodologia.mirandastech.com.br/">Metodologia</a>; a revisão, dos de <a href="https://busca.mirandastech.com.br/">Busca</a> e <a href="https://prisma.mirandastech.com.br/">PRISMA</a>; os dados organizados, do de <a href="https://dados.mirandastech.com.br/">Dados</a>; o código com release, do de <a href="https://git.mirandastech.com.br/">Git</a>; a declaração de IA, do de <a href="https://manual.mirandastech.com.br/">Uso de IA</a>; o agente, do <a href="https://plugin.mirandastech.com.br/">Plugin</a>. Hub: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s02" data-title="Mapa: do plano registrado ao dado com DOI">
+  <div class="inner">
+    <div class="kicker-part rv">Introdução<span>o roteiro do manual segue a ordem de uma pesquisa</span></div>
+    <h2 class="rv">Mapa: do plano registrado ao dado com DOI — e onde cada parte do manual entra</h2>
+    <div class="flow rv">
+      <div class="node"><span class="nn">1</span><span class="nt"><span class="gterm" tabindex="0" data-t="PGD (plano de gestão de dados)" data-d="Documento do projeto com o que será coletado, documentado, protegido, guardado, compartilhado e por quem; DMP em inglês; sete seções no plano_gestao_dados.py.">Plano de gestão de dados</span></span><span class="nd">Ainda no projeto: <code>plano_gestao_dados.py</code> (7 seções); o que será coletado, onde fica, quem acessa, o que será compartilhado</span></div>
+      <div class="node"><span class="nn">2</span><span class="nt">Rascunho do pré-registro</span><span class="nd"><code>preregistro.py</code> com o modelo certo (AsPredicted, OSF ou revisão); campos «[preencher]»</span></div>
+      <div class="node gate"><span class="nn">3</span><span class="nt">Registro — antes da coleta</span><span class="nd">O aluno registra no OSF, no AsPredicted, no PROSPERO ou no <span class="gterm" tabindex="0" data-t="ReBEC" data-d="Registro Brasileiro de Ensaios Clínicos (Fiocruz, Ministério da Saúde, OPAS, Anvisa): estudos com seres humanos no Brasil; integra a ICTRP da OMS.">ReBEC</span>; o texto fica congelado com data</span></div>
+      <div class="node"><span class="nn">4</span><span class="nt">Coleta e análise</span><span class="nd">Mudança de plano é <span class="gterm" tabindex="0" data-t="Emenda" data-d="Alteração do plano depois do registro, com data e motivo, sem apagar o texto original; também no DECISOES.md.">emenda</span> datada; o que não estava previsto é exploratório</span></div>
+      <div class="node"><span class="nn">5</span><span class="nt">Preparar o depósito</span><span class="nd">Anonimizar, README, formatos abertos, licença; <code>deposito_zenodo.py</code> sem BLOQUEIO</span></div>
+      <div class="node gate"><span class="nn">6</span><span class="nt">Depósito com DOI</span><span class="nd">O aluno faz o upload no Zenodo: «Reserve DOI» → «Preview» → «Publish»; código pelo GitHub → Zenodo</span></div>
+      <div class="node"><span class="nn">7</span><span class="nt">Preprint e artigo</span><span class="nd">Política do periódico conferida; preprint no SciELO Preprints, arXiv ou OSF; tudo ligado ao <span class="gterm" tabindex="0" data-t="ORCID" data-d="Open Researcher and Contributor ID: identificador persistente e gratuito da pessoa pesquisadora, usado por periódicos, agências, Zenodo e OSF.">ORCID</span></span></div>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:190px">Parte</th><th>O que cobre</th><th style="width:110px">Passos</th></tr></thead><tbody>
+        <tr><td><b>1 O que é e por quê</b></td><td>UNESCO · pré-registro (COS) · Registered Reports · <span class="gterm" tabindex="0" data-t="TOP Guidelines" data-d="Transparency and Openness Promotion: sete práticas em três níveis (Disclose, Share and Cite, Certify), do COS; TOP 2025.">TOP Guidelines</span> · o que registrar e quando</td><td>Passos 2 a 4</td></tr>
+        <tr><td><b>2 Pré-registrar na prática</b></td><td><code>preregistro.py</code> · OSF (conta, projeto, registro, modelos, compartilhar) · AsPredicted · PROSPERO · ReBEC</td><td>Passos 2 e 3</td></tr>
+        <tr><td><b>3 Dados</b></td><td>Plano de gestão de dados · <span class="gterm" tabindex="0" data-t="LGPD" data-d="Lei Geral de Proteção de Dados: dado pessoal só com base legal e finalidade; anonimizado de forma irreversível deixa de ser pessoal.">LGPD</span> e <span class="gterm" tabindex="0" data-t="TCLE" data-d="Termo de Consentimento Livre e Esclarecido: o que o participante autorizou, inclusive o que pode ser compartilhado.">TCLE</span> · <span class="gterm" tabindex="0" data-t="FAIR" data-d="Findable, Accessible, Interoperable, Reusable (Wilkinson et al., 2016): identificador persistente, metadados ricos, protocolo aberto, formatos e vocabulários abertos, licença e proveniência.">FAIR</span> · <span class="gterm" tabindex="0" data-t="re3data" data-d="Registro global de repositórios de dados de pesquisa (3.523 na home); filtra por área, país, certificação e padrão de metadados.">re3data</span> · licenças CC</td><td>Passos 1 e 5</td></tr>
+        <tr><td><b>4 Depositar no Zenodo</b></td><td>O que é · políticas · upload · versões · <span class="gterm" tabindex="0" data-t="DOI de conceito" data-d="No Zenodo, o DOI que representa todas as versões e resolve para a mais recente; cite-o para «a obra».">DOI de conceito</span> × versão · <span class="gterm" tabindex="0" data-t="Sandbox" data-d="sandbox.zenodo.org: a instância de testes do Zenodo; nada ali é real.">sandbox</span> · <code>deposito_zenodo.py</code> · GitHub → Zenodo</td><td>Passos 5 e 6</td></tr>
+        <tr><td><b>5 Preprints e identidade</b></td><td>Preprint, <span class="gterm" tabindex="0" data-t="Preprint · postprint" data-d="Preprint: o manuscrito antes da revisão por pares, com DOI e data; postprint: a versão aceita, sem a diagramação da editora.">postprint</span> e <span class="gterm" tabindex="0" data-t="Embargo" data-d="Prazo em que um registro ou depósito existe, com data, mas fica oculto; no OSF, até quatro anos; nos periódicos, o prazo antes de o postprint poder ficar aberto.">embargo</span> · SciELO Preprints · arXiv · OSF Preprints · Figshare · <span class="gterm" tabindex="0" data-t="Open policy finder" data-d="Índice da Jisc (sucessor do Sherpa Romeo) das políticas de acesso aberto dos periódicos e editoras.">Open policy finder</span> · ORCID</td><td>Passo 7</td></tr>
+        <tr><td><b>6 Fechar</b></td><td>Plugin · erros comuns · checklist · glossário · referências · como citar</td><td>Todos</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Como ler</span><p>Quem está escrevendo o projeto começa na Parte 1 e faz a Parte 2 com o rascunho do <code>preregistro.py</code> aberto ao lado. Quem já coletou e precisa depositar vai à Parte 3 e à Parte 4 — e roda o <code>deposito_zenodo.py</code> antes do upload. Quem tem o artigo pronto vai à Parte 5.</p></div>
+        <div class="note"><span class="blabel">Convenções</span><p>Nomes de menu e de botão entre «aspas angulares». Comandos em blocos com botão «copiar». Capturas de páginas em 1920 × 938, feitas em 09/09/2026 sem login. Figuras de terminal: execução real, pasta e autora fictícias. Nunca há senha, token ou chave neste manual nem nos scripts — e nenhum script envia nada a lugar nenhum.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 1 ===================== -->
+<section class="slide divider" id="s03" data-title="Parte 1 · O que é ciência aberta e por que pré-registrar"><div class="inner"><div class="kicker-part rv">Parte 1<span>O que é ciência aberta e por que pré-registrar</span></div><h2 class="rv">A Recomendação da UNESCO; o pré-registro segundo o COS; Registered Reports; as TOP Guidelines; o que registrar e quando</h2><p class="rv">Antes de abrir qualquer formulário: o que a <span class="gterm" tabindex="0" data-t="Ciência aberta" data-d="«Conjunto de princípios e práticas que visam tornar a pesquisa científica de todas as áreas acessível a todos» (UNESCO, 2021): conhecimento aberto, infraestruturas, engajamento social e diálogo com outros saberes.">ciência aberta</span> é (e não é), por que separar a hipótese dos dados que a testam, como um periódico aceita um artigo antes de ver os resultados, o que os periódicos e financiadores estão pedindo — e a regra de quando registrar cada tipo de estudo.</p></div><div class="num">01</div></section>
+
+<section class="slide" id="s04" data-title="Ciência aberta segundo a UNESCO">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e por quê<span>1 de 5 · unesco.org, Recomendação sobre Ciência Aberta (2021) · captura de 09/09/2026</span></div>
+    <h2 class="rv">Ciência aberta segundo a UNESCO: «tão aberto quanto possível», com exceções para direitos humanos, confidencialidade e conhecimentos indígenas</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_25_unesco_open_science.jpg" width="1920" height="938" alt="Página Open science da UNESCO, com a definição de ciência aberta e a referência à Recomendação de 2021"></div><figcaption><b>Figura 1</b> A página «Open science» da UNESCO (captura de 09/09/2026, sem login): a Recomendação sobre Ciência Aberta, adotada em 2021 por 193 Estados-membros, define ciência aberta como «um conjunto de princípios e práticas que visam tornar a pesquisa científica de todas as áreas acessível a todos, em benefício dos cientistas e da sociedade».</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:230px">Pilar (UNESCO, 2021)</th><th>O que é</th></tr></thead><tbody>
+          <tr><td><b>Conhecimento científico aberto</b></td><td>Publicações, dados, software, materiais e protocolos abertos — «tão aberto quanto possível», com exceções para direitos humanos, confidencialidade e conhecimentos indígenas</td></tr>
+          <tr><td><b>Infraestruturas e capacitação</b></td><td>Repositórios, registros, identificadores e formação para usá-los</td></tr>
+          <tr><td><b>Engajamento social</b></td><td>Participação de outros atores da sociedade na pesquisa</td></tr>
+          <tr><td><b>Diálogo com outros sistemas de conhecimento</b></td><td>Reconhecimento de saberes fora da ciência acadêmica</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>«Tão aberto quanto possível» não é «tudo aberto»: a própria Recomendação prevê exceções. Neste manual, o que é dado pessoal de participante, material licenciado de terceiros ou conhecimento de comunidades tradicionais fica fora do depósito (Parte 3) — a abertura é do plano, do método, do código e do dado que pode ser aberto.</p></div>
+        <div class="note"><span class="blabel">Neste manual</span><p>Os dois pilares que o pós-graduando controla sozinho são o primeiro (o que publica e sob qual licença) e o segundo (os registros e repositórios que usa: OSF, PROSPERO, ReBEC, Zenodo, ORCID). É por eles que o manual passa.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s05" data-title="Pré-registro segundo o COS">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e por quê<span>2 de 5 · cos.io/initiatives/prereg · Nosek et al. (2018) · captura de 09/09/2026</span></div>
+    <h2 class="rv">Pré-registro: «especificar seu plano de pesquisa antecipadamente e submetê-lo a um registro» — porque os mesmos dados não podem gerar e testar a hipótese</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_06_cos_prereg.jpg" width="1920" height="938" alt="Página Preregistration do Center for Open Science, com o chamado Future-proof your research, preregister your next study"></div><figcaption><b>Figura 2</b> A página «Preregistration» do Center for Open Science — cos.io (captura de 09/09/2026, sem login): «Future-proof your research. Preregister your next study.» O COS mantém o OSF e define pré-registrar como «especificar seu plano de pesquisa antecipadamente e submetê-lo a um registro».</figcaption></figure>
+      <div>
+        <div class="compare">
+          <div><div class="cmp-h">Sem pré-registro</div><ul>
+            <li>A hipótese é escrita depois de olhar os resultados — e os mesmos dados que a sugeriram são os que a «confirmam»</li>
+            <li>Análises são escolhidas até uma dar significativa; o valor de p perde o sentido</li>
+            <li>Ninguém consegue distinguir o que foi planejado do que foi encontrado por acaso</li>
+          </ul></div>
+          <div><div class="cmp-h">Com pré-registro (benefícios listados pelo COS)</div><ul>
+            <li>Credibilidade e transparência: o plano tem data e não muda</li>
+            <li>Reivindicar a ideia antes de outra pessoa</li>
+            <li>Melhor planejamento: escrever o plano expõe o que falta</li>
+            <li>Menos falsos positivos; preserva o valor diagnóstico do p</li>
+          </ul></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A frase do COS resume o motivo: «os mesmos dados não podem ser usados para gerar e testar uma hipótese». Pré-registrar não proíbe explorar — obriga a dizer o que era <em>confirmatório</em> (previsto no registro) e o que é <em>exploratório</em> (surgiu dos dados). Nosek et al. (2018) chamam isso de «revolução do pré-registro».</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s06" data-title="Registered Reports">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e por quê<span>3 de 5 · cos.io/initiatives/registered-reports · captura de 09/09/2026</span></div>
+    <h2 class="rv">Registered Reports: «revisão por pares antes de os resultados serem conhecidos» — Stage 1, aceitação em princípio, Stage 2</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_07_cos_registered_reports.jpg" width="1920" height="938" alt="Página Registered Reports do Center for Open Science, com o título Peer review before results are known"></div><figcaption><b>Figura 3</b> A página «Registered Reports» — cos.io (captura de 09/09/2026, sem login): «Peer review before results are known». O formato é adotado por «mais de 300 periódicos», segundo a página.</figcaption></figure>
+      <div>
+        <div class="flow">
+          <div class="node"><span class="nn">1</span><span class="nt">Stage 1</span><span class="nd">Introdução, métodos e, se houver, piloto — submetidos ao periódico <em>antes</em> da coleta</span></div>
+          <div class="node gate"><span class="nn">2</span><span class="nt"><span class="gterm" tabindex="0" data-t="Aceitação em princípio" data-d="Compromisso do periódico de publicar o Registered Report, que «não será revogada com base nos resultados».">Aceitação em princípio</span></span><span class="nd">O periódico compromete-se a publicar; a aceitação «não será revogada com base nos resultados»</span></div>
+          <div class="node"><span class="nn">3</span><span class="nt">Coleta e análise</span><span class="nd">Conforme o protocolo aceito</span></div>
+          <div class="node"><span class="nn">4</span><span class="nt">Stage 2</span><span class="nd">Resultados e discussão; as análises pré-registradas ficam separadas das exploratórias</span></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O <span class="gterm" tabindex="0" data-t="Registered Report" data-d="Formato de artigo em que o protocolo é revisado por pares antes de os resultados serem conhecidos; Stage 1 → aceitação em princípio → Stage 2 («mais de 300 periódicos»).">Registered Report</span> é o pré-registro levado ao periódico: o revisor avalia a pergunta e o método, não o resultado. Serve para quem ainda vai coletar e tem um periódico-alvo que oferece o formato — a lista está na página do COS. Para os demais casos, o registro público (Parte 2) cumpre o mesmo papel sem depender do periódico.</p></div>
+        <div class="note"><span class="blabel">O que o manual não afirma</span><p>Quais periódicos da sua área aceitam Registered Reports, nem os prazos de cada um: confira na página do COS e no site do periódico.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s07" data-title="TOP Guidelines">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e por quê<span>4 de 5 · cos.io/initiatives/top-guidelines · Nosek et al. (2015) · captura de 09/09/2026</span></div>
+    <h2 class="rv">TOP Guidelines: sete práticas de transparência em três níveis — o que periódicos, financiadores e sociedades passaram a pedir</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_08_cos_top.jpg" width="1920" height="938" alt="Página TOP Guidelines do Center for Open Science, com a versão TOP 2025"></div><figcaption><b>Figura 4</b> A página «TOP Guidelines» — cos.io (captura de 09/09/2026, sem login): as Transparency and Openness Promotion Guidelines, «criadas por periódicos, financiadores e sociedades para alinhar ideais e práticas científicas» (Nosek et al., <em>Science</em>, 2015); a página apresenta a versão «TOP 2025».</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:250px">Sete práticas (TOP 2025)</th><th>Três níveis, para cada prática</th></tr></thead><tbody>
+          <tr><td><b>Study Registration</b> · <b>Study Protocol</b> · <b>Analysis Plan</b></td><td rowspan="3" style="vertical-align:top"><b>Disclose</b> (declarar): o artigo diz se a prática foi seguida e onde está o material<br><b>Share and Cite</b> (compartilhar e citar): o material é compartilhado e citado<br><b>Certify</b>: verificação independente</td></tr>
+          <tr><td><b>Materials Transparency</b> · <b>Analysis Code Transparency</b> · <b>Data Transparency</b></td></tr>
+          <tr><td><b>Reporting Transparency</b></td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Leia a tabela como um mapa deste manual: <em>Study Registration</em>, <em>Protocol</em> e <em>Analysis Plan</em> são o pré-registro (Parte 2); <em>Data</em>, <em>Materials</em> e <em>Analysis Code Transparency</em> são o depósito com DOI (Partes 3 e 4); <em>Reporting</em> é declarar tudo isso no artigo. O nível mínimo — «Disclose» — já é dizer no texto se registrou e onde os dados estão. A TOP 2025 (Grant et al., 2026, preprint) acrescenta ainda duas práticas e quatro estudos de verificação, não detalhados aqui.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s08" data-title="O que registrar e quando">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e por quê<span>5 de 5 · COS · Booth et al. (2012) · help.osf.io</span></div>
+    <h2 class="rv">O que registrar e quando: estudo primário antes da coleta, revisão antes da extração, emenda datada, exploratório declarado</h2>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:210px">Tipo de estudo</th><th>O que vai no registro</th><th style="width:230px">Quando</th><th style="width:170px">Onde (Parte 2)</th></tr></thead><tbody>
+        <tr><td><b>Estudo primário</b> (experimento, survey, coleta de sensores)</td><td>Hipótese, variáveis, condições, análises, exclusões, tamanho da amostra</td><td><span class="pill p-stop">antes de coletar</span></td><td>OSF Registries; AsPredicted; ReBEC (com seres humanos, no Brasil)</td></tr>
+        <tr><td><b>Revisão sistemática</b></td><td>Pergunta, critérios de elegibilidade, bases e estratégia, extração, síntese</td><td><span class="pill p-stop">antes de começar a extração</span> (regra do PROSPERO, Booth et al., 2012)</td><td>PROSPERO (desfechos em saúde); OSF, modelo Systematic Review</td></tr>
+        <tr><td><b>Estudo com dados já existentes</b></td><td>O mesmo, dizendo o que já foi visto dos dados e o que não</td><td><span class="pill p-amber">antes de analisar</span></td><td>OSF, modelo Secondary Data Preregistration</td></tr>
+        <tr><td><b>Estudo qualitativo</b></td><td>Pergunta, abordagem, coleta, análise prevista — sem hipótese fechada</td><td><span class="pill p-amber">antes de coletar</span></td><td>OSF, modelo Qualitative Preregistration</td></tr>
+        <tr><td><b>Registered Report</b></td><td>Stage 1 (introdução, métodos, piloto)</td><td><span class="pill p-stop">antes de coletar</span>, no periódico</td><td>OSF, modelo Registered Report Protocol</td></tr>
+        <tr><td><b>Estudo exploratório</b></td><td>Declarar que é exploratório; registrar o que se pretende observar</td><td><span class="pill p-blue">quando houver plano</span></td><td>OSF (qualquer modelo, declarado)</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O texto registrado não muda. Se o plano mudar — a amostra encolheu, uma variável não pôde ser medida — a mudança é uma <span class="gterm" tabindex="0" data-t="Emenda" data-d="Alteração do plano depois do registro, com data e motivo, sem apagar o texto original; também no DECISOES.md.">emenda</span> datada, com o motivo, registrada no mesmo lugar e no <code>DECISOES.md</code> do projeto. O que não estava previsto e foi feito é relatado como <em>exploratório</em>. É a regra que o <code>preregistro.py</code> imprime no topo de cada rascunho (Figura 5).</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>«Registro depois, quando o método estiver redondo».</strong> O método fica redondo ao escrevê-lo para o registro — é um dos benefícios listados pelo COS. Registre o que sabe; o que faltar vira emenda. Um registro feito depois de ver os dados não é pré-registro.</p></div>
+        <div class="note"><span class="blabel"><span class="gterm" tabindex="0" data-t="Embargo" data-d="Prazo em que um registro ou depósito existe, com data, mas fica oculto; no OSF, até quatro anos; nos periódicos, o prazo antes de o postprint poder ficar aberto.">Embargo</span></span><p>Registrar não obriga a mostrar o plano agora: o OSF permite embargo de até quatro anos (Parte 2) — o registro tem data, mas fica oculto até o prazo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 2 ===================== -->
+<section class="slide divider" id="s09" data-title="Parte 2 · Pré-registrar na prática"><div class="inner"><div class="kicker-part rv">Parte 2<span>Pré-registrar na prática</span></div><h2 class="rv"><code>preregistro.py</code> e as oito perguntas do AsPredicted; OSF: conta, projeto, registro passo a passo, modelos, embargo e DOI; AsPredicted; PROSPERO para revisões; ReBEC; compartilhar o projeto</h2><p class="rv">O rascunho sai do terminal em Markdown, com as perguntas do modelo escolhido; o registro é feito pelo aluno, logado na própria conta, no serviço certo para o tipo de estudo. As telas que exigem login não foram capturadas: os passos são os das ajudas oficiais de 09/09/2026, com os nomes exatos dos botões.</p></div><div class="num">02</div></section>
+
+<section class="slide" id="s10" data-title="preregistro.py e as oito perguntas">
+  <div class="inner">
+    <div class="kicker-part rv">Pré-registrar<span>1 de 8 · demonstração de 09/09/2026 · Python 3, só biblioteca padrão · aspredicted.org</span></div>
+    <h2 class="rv"><code>preregistro.py</code>: o rascunho em Markdown com as oito perguntas do AsPredicted — campos «[preencher]» e a regra das emendas no topo</h2>
+    <figure class="rv"><div class="shot"><img src="capturas/ca_t1_preregistro.jpg" width="1920" height="820" alt="Terminal: preregistro.py com --modelo aspredicted grava 00_protocolo/PREREGISTRO.md com 8 seções; head mostra o cabeçalho, a regra das emendas e as perguntas 1 a 4 com campos [preencher]"></div><figcaption><b>Figura 5</b> A sessão de 09/09/2026 (execução real; pasta e autora fictícias): <code>python3 scripts/preregistro.py --modelo aspredicted --titulo "…" --saida 00_protocolo/PREREGISTRO.md</code> responde «gravado: 00_protocolo/PREREGISTRO.md (8 seções, modelo aspredicted)»; o <code>head -22</code> mostra o cabeçalho («Modelo: AsPredicted (8 perguntas) · Rascunho gerado em 2026-09-09 · Autores: [preencher]»), a regra «o texto registrado não muda…» e as perguntas 1 a 4, cada uma com o nome original entre parênteses e um campo <code>[preencher]</code>.</figcaption></figure>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:40px">#</th><th style="width:260px">Pergunta (AsPredicted)</th><th>O que responder</th></tr></thead><tbody>
+        <tr><td>1</td><td><b>Dados existentes</b> (Data collection)</td><td>Já foi coletado algum dado? Ainda não; sim, mas não foi visto; sim, já foi visto — e explique</td></tr>
+        <tr><td>2</td><td><b>Hipótese</b> (Hypothesis)</td><td>A pergunta principal ou a hipótese testada, numa frase</td></tr>
+        <tr><td>3</td><td><b>Variável dependente</b> (Dependent variable)</td><td>A(s) variável(is) de resultado, como será(ão) medida(s) e a unidade</td></tr>
+        <tr><td>4</td><td><b>Condições</b> (Conditions)</td><td>Quantas e quais condições ou grupos; como serão alocados</td></tr>
+        <tr><td>5</td><td><b>Análises</b> (Analyses)</td><td>O teste ou modelo que vai responder à hipótese</td></tr>
+        <tr><td>6</td><td><b>Outliers e exclusões</b> (Outliers and exclusions)</td><td>A regra, decidida antes, para excluir observações</td></tr>
+        <tr><td>7</td><td><b>Tamanho da amostra</b> (Sample size)</td><td>Quantas observações e por quê; quando a coleta para</td></tr>
+        <tr><td>8</td><td><b>Outros</b> (Other)</td><td>O que mais precisa estar registrado</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="code"><div class="code-head">terminal — os três modelos do script (a saída da demonstração está na Figura 5)</div><pre>python3 scripts/preregistro.py --modelo aspredicted --titulo "…" --saida 00_protocolo/PREREGISTRO.md   # 8 perguntas
+python3 scripts/preregistro.py --modelo osf --titulo "…"        # 5 seções do OSF Preregistration
+python3 scripts/preregistro.py --modelo revisao --titulo "…"    # 10 seções (PROSPERO / PRISMA-P)
+# --autores "Sobrenome, Nome"; --forcar para sobrescrever um rascunho existente</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O script escreve o rascunho e nada mais: não cria conta, não registra, não envia. Preencha os campos com o orientador, congele o texto e então <strong>o aluno faz o registro</strong> no serviço escolhido (slides seguintes), copiando as respostas para o formulário. O arquivo fica em <code>00_protocolo/</code> e entra no Git (manual irmão) com a data do registro na mensagem do commit.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s11" data-title="OSF: conta e projeto">
+  <div class="inner">
+    <div class="kicker-part rv">Pré-registrar<span>2 de 8 · osf.io · help.osf.io «Creating a project» · capturas de 09/09/2026</span></div>
+    <h2 class="rv">OSF: «uma plataforma gratuita e aberta para apoiar sua pesquisa» — conta, projeto e a região de armazenamento, que não muda depois</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_01_osf_home.jpg" width="1920" height="938" alt="Página inicial do OSF com o título There's a better way to manage your research e a seção Discover Public Research"></div><figcaption><b>Figura 6</b> A home de osf.io (captura de 09/09/2026, sem login): «There's a better way to manage your research», «Discover Public Research» e o aviso de cookies. Menu lateral: Home, Search OSF, Support, Registries, Preprints, Meetings, Institutions, Donate, Sign in. O OSF é mantido pelo Center for Open Science.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/ca_04_osf_help_create_project.jpg" width="1920" height="938" alt="Página de ajuda do OSF Welcome to OSF Projects, com os passos para criar um projeto"></div><figcaption><b>Figura 7</b> «Welcome to OSF Projects», em help.osf.io (captura de 09/09/2026, sem login): criar projeto → título → <strong>região de armazenamento</strong> (Estados Unidos, Canadá, Alemanha ou Austrália; só na criação, não muda depois) → afiliação institucional (opcional) → descrição (opcional) → criar; ou a partir de um modelo, que copia a estrutura de componentes de outro projeto, sem o conteúdo.</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:190px">O que um projeto tem (help.osf.io)</th><th>Para quê</th></tr></thead><tbody>
+        <tr><td><b>Arquivos</b></td><td>Materiais, instrumentos, dados que podem ser abertos; integrações com GitHub e armazenamento em nuvem</td></tr>
+        <tr><td><b>Wiki, tags, links</b></td><td>Descrição viva do projeto e o que o liga ao pré-registro e ao artigo</td></tr>
+        <tr><td><b>Componentes</b></td><td>Subprojetos — um por estudo, por fase ou por conjunto de dados, cada um com a própria visibilidade</td></tr>
+        <tr><td><b>Registros</b></td><td>Os pré-registros ligados ao projeto (slide seguinte)</td></tr>
+        <tr><td><b>Visibilidade</b></td><td>Privado por padrão; pode ficar público ou acessível por link (slide «Compartilhar o projeto»)</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A conta é gratuita e é o aluno quem a cria, em osf.io; este manual não fez login. Escolha a região de armazenamento pensando na LGPD e no comitê de ética: ela não muda depois da criação. Um projeto por pesquisa; componentes por estudo — o pré-registro liga-se ao projeto e o DOI do dado vem do Zenodo (Parte 4).</p></div>
+        <div class="note"><span class="blabel">Aviso nas páginas</span><p>Em setembro de 2026 as páginas de ajuda e o Registries exibem um banner «OSF Project Transition» / «Changes to OSF Projects» («Changes begin November 18, 2026»). O manual cita o aviso sem detalhar o que muda, porque isso não foi conferido.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s12" data-title="OSF: registro passo a passo">
+  <div class="inner">
+    <div class="kicker-part rv">Pré-registrar<span>3 de 8 · osf.io/registries · help.osf.io «Create a preregistration» · capturas de 09/09/2026 · tela logada conforme a ajuda oficial</span></div>
+    <h2 class="rv">OSF: registrar passo a passo — «My Registrations» → «Add a Registration» → conteúdo de projeto? → modelo → preencher → registrar</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_02_osf_registries.jpg" width="1920" height="938" alt="Página OSF Registries com o botão Add a Registration, a seção The open registries network e o banner Changes to OSF Projects"></div><figcaption><b>Figura 8</b> osf.io/registries (captura de 09/09/2026, sem login): o botão «Add a Registration», a busca por registros públicos, «The open registries network» (ASIST, CharacterLab, EGAP…) e o banner «Changes to OSF Projects».</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/ca_03_osf_help_registrations.jpg" width="1920" height="938" alt="Página de ajuda do OSF Welcome to Registrations and Preregistrations, com o aviso OSF Project Transition"></div><figcaption><b>Figura 9</b> «Welcome to Registrations &amp; Preregistrations!», em help.osf.io (captura de 09/09/2026, sem login), com o aviso «OSF Project Transition». É a página que descreve o fluxo abaixo; a tela logada de «Add a Registration» não foi capturada.</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div>
+        <div class="flow">
+          <div class="node"><span class="nn">1</span><span class="nt">«My Registrations» → «Add a Registration»</span><span class="nd">Logado na própria conta; também pelo botão em osf.io/registries</span></div>
+          <div class="node"><span class="nn">2</span><span class="nt">Tem conteúdo de projeto existente?</span><span class="nd">Sim: o registro liga-se ao projeto; não: registro avulso</span></div>
+          <div class="node"><span class="nn">3</span><span class="nt">Escolher o modelo</span><span class="nd">OSF Preregistration, AsPredicted.org, Qualitative, Registered Report Protocol, Secondary Data, Systematic Review (slide seguinte)</span></div>
+          <div class="node"><span class="nn">4</span><span class="nt">Preencher</span><span class="nd">Copiando as respostas do <code>PREREGISTRO.md</code>; público agora ou embargo de até quatro anos</span></div>
+          <div class="node gate"><span class="nn">5</span><span class="nt">Registrar</span><span class="nd">Após a aprovação (48 h, ou aprovação imediata do administrador) o registro é <strong>imutável</strong> e recebe um DOI permanente</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Depois de registrado, o texto não pode ser editado nem apagado — só retirado com justificativa. Por isso o rascunho é revisado com o orientador <em>antes</em> do clique, e a data do registro entra no <code>PROGRESSO.md</code> e no <code>00_protocolo/</code> com a URL e o DOI. Quem registra é o aluno, na própria conta; nenhum registro foi criado para este manual.</p></div>
+        <div class="note"><span class="blabel">Revisão cega</span><p>O OSF gera um link somente-leitura anonimizado do registro, para enviar ao periódico durante a revisão cega sem revelar os autores — mesmo sob embargo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s13" data-title="Modelos do OSF, embargo e DOI imutável">
+  <div class="inner">
+    <div class="kicker-part rv">Pré-registrar<span>4 de 8 · help.osf.io «Create a preregistration»</span></div>
+    <h2 class="rv">Os modelos do OSF: qual escolher para cada estudo — e o que acontece depois do registro (embargo, link anônimo, DOI imutável)</h2>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:230px">Modelo (help.osf.io)</th><th>Para</th><th style="width:220px">Rascunho</th></tr></thead><tbody>
+        <tr><td><b>OSF Preregistration</b></td><td>O mais usado e completo: Study Information (hipóteses), Design Plan, Sampling Plan, Variables, Analysis Plan — estudos primários quantitativos</td><td><code>--modelo osf</code> (5 seções)</td></tr>
+        <tr><td><b>AsPredicted.org</b></td><td>As oito perguntas do AsPredicted, dentro do OSF: rápido, para experimentos e surveys</td><td><code>--modelo aspredicted</code> (8)</td></tr>
+        <tr><td><b>Qualitative Preregistration</b></td><td>Estudos qualitativos: pergunta, abordagem, coleta e análise, sem hipótese fechada</td><td>adaptar do <code>osf</code></td></tr>
+        <tr><td><b>Registered Report Protocol</b></td><td>O Stage 1 de um Registered Report, com a <span class="gterm" tabindex="0" data-t="Aceitação em princípio" data-d="Compromisso do periódico de publicar o Registered Report, que «não será revogada com base nos resultados».">aceitação em princípio</span> do periódico</td><td>adaptar do <code>osf</code></td></tr>
+        <tr><td><b>Secondary Data Preregistration</b></td><td>Análise de dados que já existem: declara o que já foi visto</td><td>adaptar do <code>osf</code></td></tr>
+        <tr><td><b>Systematic Review</b></td><td>Revisões sistemáticas fora do escopo do PROSPERO (sem desfecho em saúde)</td><td><code>--modelo revisao</code> (10)</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Depois do registro</th><th>O que a ajuda diz</th></tr></thead><tbody>
+          <tr><td><b>Visibilidade</b></td><td>Público imediatamente, ou embargo de até quatro anos</td></tr>
+          <tr><td><b>Aprovação</b></td><td>48 h, ou aprovação imediata do administrador do projeto</td></tr>
+          <tr><td><b>Depois de aprovado</b></td><td>Imutável; DOI permanente; não pode ser editado nem apagado — só retirado com justificativa</td></tr>
+          <tr><td><b>Revisão cega</b></td><td>Link somente-leitura anonimizado</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A ajuda do OSF é explícita: «não recomendamos um modelo específico porque não conhecemos os detalhes do seu estudo». Escolha com o orientador: quantitativo primário → OSF Preregistration; experimento simples → AsPredicted; revisão com desfecho em saúde → PROSPERO (não o OSF); revisão fora da saúde → Systematic Review. Os itens exatos de cada formulário não estão neste manual — só a estrutura geral.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s14" data-title="AsPredicted">
+  <div class="inner">
+    <div class="kicker-part rv">Pré-registrar<span>5 de 8 · aspredicted.org · captura de 09/09/2026</span></div>
+    <h2 class="rv">AsPredicted: oito perguntas, um PDF de uma página com carimbo de data e URL única — privado até o autor tornar público</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_15_aspredicted.jpg" width="1920" height="938" alt="Página inicial do AsPredicted com as seções What is AsPredicted, How does it work e o botão New Pre-registration"></div><figcaption><b>Figura 10</b> aspredicted.org (captura de 09/09/2026, sem login): «What is AsPredicted?», «How does it work?» e os botões «New Pre-registration», «Your Pre-registrations» e «Public Pre-registrations»; no rodapé, o Wharton Credibility Lab. «Uma plataforma que torna pré-registros fáceis de fazer e de avaliar.»</figcaption></figure>
+      <div>
+        <div class="flow">
+          <div class="node"><span class="nn">1</span><span class="nt">«New Pre-registration»</span><span class="nd">Um autor cria o pré-registro, logado</span></div>
+          <div class="node"><span class="nn">2</span><span class="nt">Oito perguntas</span><span class="nd">As da Figura 5, coladas do <code>PREREGISTRO.md</code></span></div>
+          <div class="node"><span class="nn">3</span><span class="nt">Coautores aprovam</span><span class="nd">Cada coautor confirma o texto</span></div>
+          <div class="node gate"><span class="nn">4</span><span class="nt">PDF com data e URL</span><span class="nd">«Todos os pré-registros podem ser baixados como PDF de uma página, com carimbo de data e URL única»</span></div>
+          <div class="node"><span class="nn">5</span><span class="nt">Privado → público</span><span class="nd">Fica privado até o autor tornar público; a URL vai no artigo</span></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O AsPredicted é a escolha quando o estudo cabe em oito respostas curtas e você quer um PDF com data para anexar à submissão. Se o periódico ou o programa pedir DOI do registro, use o OSF (o modelo «AsPredicted.org» do OSF faz as mesmas perguntas e emite DOI). Nenhum pré-registro foi criado para este manual.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s15" data-title="PROSPERO para revisões">
+  <div class="inner">
+    <div class="kicker-part rv">Pré-registrar<span>6 de 8 · crd.york.ac.uk/prospero · Booth et al. (2012) · capturas de 09/09/2026</span></div>
+    <h2 class="rv">PROSPERO: o registro internacional de revisões sistemáticas com desfechos em saúde — gratuito, logado, e antes de começar a extração</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_14_prospero.jpg" width="1920" height="938" alt="Página inicial do PROSPERO com a seção What is PROSPERO, o botão Register your review now e o gráfico de registros"></div><figcaption><b>Figura 11</b> A home do PROSPERO — crd.york.ac.uk/prospero, NIHR/CRD, Universidade de York (captura de 09/09/2026, sem login): «What is PROSPERO?», «Register your review now» e o gráfico de registros. «Inclui atualmente registros de mais de 495.000 revisões sistemáticas registradas prospectivamente com desfechos relacionados à saúde.»</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/ca_34_prospero_register.jpg" width="1920" height="938" alt="Página do PROSPERO na seção Registering a review, com a orientação de que o registro é rápido, fácil e gratuito e exige login"></div><figcaption><b>Figura 12</b> A mesma home, na seção «Registering a review» (captura de 09/09/2026, sem login): «registrar uma revisão é rápido, fácil e gratuito. Você precisa estar logado». O formulário de registro exige conta e não foi capturado.</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:190px">PROSPERO</th><th>O que a página diz (09/09/2026)</th></tr></thead><tbody>
+        <tr><td><b>Objetivo</b></td><td>«Promover transparência e ciência aberta, reduzir viés de relato e ajudar a evitar duplicação não intencional»</td></tr>
+        <tr><td><b>Escopo</b></td><td>Revisões sistemáticas com desfechos relacionados à saúde; mais de 495.000 registradas prospectivamente</td></tr>
+        <tr><td><b>Custo · acesso</b></td><td>Gratuito; exige login</td></tr>
+        <tr><td><b>Quando</b></td><td>Antes de começar a extração de dados (Booth et al., 2012, «The nuts and bolts of PROSPERO»)</td></tr>
+        <tr><td><b>Rascunho</b></td><td><code>preregistro.py --modelo revisao</code>: 10 seções alinhadas ao PROSPERO e ao PRISMA-P</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O que não pode ter começado é a extração de dados — é a regra do PROSPERO (Booth et al., 2012). Registre o número do PROSPERO no protocolo, no <code>PROGRESSO.md</code> e no artigo. Revisões sem desfecho em saúde vão ao OSF, modelo Systematic Review (slide «Modelos do OSF»); o manual irmão de <a href="https://prisma.mirandastech.com.br/">PRISMA</a> cuida do resto da revisão.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Registrar a revisão depois de extrair «só para ter o número».</strong> O registro é prospectivo: a data dele fica pública e um revisor compara com as datas de busca e de extração do artigo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s16" data-title="ReBEC">
+  <div class="inner">
+    <div class="kicker-part rv">Pré-registrar<span>7 de 8 · ensaiosclinicos.gov.br · captura de 09/09/2026</span></div>
+    <h2 class="rv">ReBEC: o registro brasileiro para estudos experimentais e não experimentais com seres humanos — Fiocruz, Ministério da Saúde, OPAS e Anvisa</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_16_rebec.jpg" width="1920" height="938" alt="Página inicial do ReBEC em inglês, com os links Instructions for the Registrant e a área de login"></div><figcaption><b>Figura 13</b> A home do ReBEC — ensaiosclinicos.gov.br (captura de 09/09/2026, sem login; a página abriu em inglês): «Instructions for the Registrant», «Registrant's Manual» e o login. «Plataforma virtual de acesso aberto para registrar estudos experimentais e não experimentais envolvendo seres humanos conduzidos no Brasil.»</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:190px">ReBEC</th><th>O que a página diz (09/09/2026)</th></tr></thead><tbody>
+          <tr><td><b>Escopo</b></td><td>Estudos experimentais e não experimentais envolvendo seres humanos, conduzidos no Brasil</td></tr>
+          <tr><td><b>Quem mantém</b></td><td>Parceria Fiocruz, Ministério da Saúde (DECIT), OPAS e Anvisa</td></tr>
+          <tr><td><b>Formulários</b></td><td>Em português e em inglês; «Instructions for the Registrant» e «Registrant's Manual»</td></tr>
+          <tr><td><b>Integração</b></td><td>Plataforma ICTRP da OMS (o registro fica visível internacionalmente)</td></tr>
+          <tr><td><b>Fast tracks</b></td><td>Para estudos com povos indígenas e comunidades tradicionais</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Se o seu estudo envolve pessoas no Brasil — um ensaio, uma intervenção, um estudo observacional com participantes —, o registro é no ReBEC, além (não em vez) do comitê de ética. O formulário exige conta e não foi capturado: siga o «Registrant's Manual». O pré-registro do plano de análise pode ir, em paralelo, ao OSF.</p></div>
+        <div class="note"><span class="blabel">O que o manual não afirma</span><p>Os campos do formulário do ReBEC, prazos de análise e a relação com a Plataforma Brasil não foram conferidos nesta data: consulte as instruções oficiais e o comitê de ética da instituição.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s17" data-title="OSF: compartilhar o projeto">
+  <div class="inner">
+    <div class="kicker-part rv">Pré-registrar<span>8 de 8 · help.osf.io (projetos: compartilhar) · captura de 09/09/2026</span></div>
+    <h2 class="rv">OSF: compartilhar o projeto — público, por link ou privado, e componentes com visibilidade própria</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_31_osf_help_share.jpg" width="1920" height="938" alt="Página de ajuda do OSF sobre projetos, explicando as opções de compartilhar: público, por link e privado, e os componentes"></div><figcaption><b>Figura 14</b> A ajuda de projetos do OSF sobre compartilhar (captura de 09/09/2026, sem login): um projeto é privado por padrão e pode ficar público ou acessível por link; componentes são subprojetos, cada um com a própria visibilidade.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Opção</th><th>Quem vê</th><th style="width:250px">Use para</th></tr></thead><tbody>
+          <tr><td><b>Privado</b> (padrão)</td><td>Só os colaboradores</td><td>Enquanto o projeto está em andamento; dados que ainda não podem ser abertos</td></tr>
+          <tr><td><b>Por link</b></td><td>Quem tiver o link</td><td>Revisores e banca, sem tornar público; o link anonimizado do registro serve à revisão cega</td></tr>
+          <tr><td><b>Público</b></td><td>Todos, indexado</td><td>Materiais, instrumentos e o pré-registro depois do embargo</td></tr>
+          <tr><td><b>Componentes</b></td><td>Cada um com a própria opção</td><td>Um <span class="gterm" tabindex="0" data-t="Componente (OSF)" data-d="Subprojeto dentro de um projeto do OSF, com visibilidade própria.">componente</span> público com os materiais e outro privado com o que não pode sair</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Tornar público é uma decisão por <span class="gterm" tabindex="0" data-t="Componente (OSF)" data-d="Subprojeto dentro de um projeto do OSF, com visibilidade própria.">componente</span>, não por projeto inteiro: o instrumento e o pré-registro podem ser públicos enquanto os dados de participantes ficam num componente privado — ou, melhor, fora do OSF (Parte 3). Público no OSF não substitui o DOI do dado: para o conjunto de dados citável, o depósito é no Zenodo (Parte 4).</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Tornar o projeto público «para o revisor ver».</strong> Público é indexado e definitivo para quem já copiou. Para a revisão, use o link — e, para o registro, o link anonimizado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 3 ===================== -->
+<section class="slide divider" id="s18" data-title="Parte 3 · Dados: plano, ética e formatos"><div class="inner"><div class="kicker-part rv">Parte 3<span>Dados: plano, ética e formatos</span></div><h2 class="rv">Plano de gestão de dados; LGPD, TCLE e anonimização; princípios FAIR; re3data para achar o repositório; licenças Creative Commons e licença de software</h2><p class="rv">O dado só pode ser depositado se foi planejado para isso: o que será coletado, o que o participante autorizou, em que formato, com que licença e em que repositório. Cinco slides entre o projeto e o upload — com o <code>plano_gestao_dados.py</code> escrevendo o plano em sete seções.</p></div><div class="num">03</div></section>
+
+<section class="slide" id="s19" data-title="Plano de gestão de dados">
+  <div class="inner">
+    <div class="kicker-part rv">Dados<span>1 de 5 · dmptool.org · demonstração de 09/09/2026 (Figura 28) · captura de 09/09/2026</span></div>
+    <h2 class="rv">Plano de gestão de dados: sete seções escritas no projeto, antes da coleta — o <code>plano_gestao_dados.py</code> e o DMPTool</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_24_dmptool.jpg" width="1920" height="938" alt="Página inicial do DMPTool com o slogan Best practice made easier e a descrição da ferramenta de planos de gestão de dados"></div><figcaption><b>Figura 15</b> dmptool.org, da California Digital Library (captura de 09/09/2026, sem login): «Best practice made easier». «Aplicação gratuita e de código aberto que ajuda pesquisadores a criar planos de gestão de dados (DMPs)» exigidos por financiadores (NSF, NIH…), com modelos por agência; em parceria com o DCC do Reino Unido desde 2016. O uso exige login e não foi capturado.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:40px">#</th><th style="width:250px">Seção do PGD</th><th>O que responder</th></tr></thead><tbody>
+          <tr><td>1</td><td><b>Descrição dos dados</b></td><td>O que será coletado ou gerado, volume, formatos</td></tr>
+          <tr><td>2</td><td><b>Documentação e metadados</b></td><td>README, dicionário de variáveis, unidades, codebook</td></tr>
+          <tr><td>3</td><td><b>Ética, dados pessoais e sigilo</b></td><td>TCLE, LGPD, anonimização, o que nunca sai (slide seguinte)</td></tr>
+          <tr><td>4</td><td><b>Armazenamento e backup 3-2-1</b></td><td>Onde o dado bruto fica intocado; três cópias, dois suportes, uma fora</td></tr>
+          <tr><td>5</td><td><b>Compartilhamento e preservação</b></td><td>Repositório (Zenodo por padrão), licença, embargo, DOI</td></tr>
+          <tr><td>6</td><td><b>Responsabilidades e custos</b></td><td>Quem cuida de quê; o que custa</td></tr>
+          <tr><td>7</td><td><b>Revisão do plano</b></td><td>Quando o plano é revisto e onde a mudança é registrada</td></tr>
+        </tbody></table></div>
+        <div class="code"><div class="code-head">terminal — o comando da demonstração (Figura 28) e a saída real</div><pre>python3 scripts/plano_gestao_dados.py --titulo "Manutenção preditiva em guindastes portuários" --saida 00_projeto/PLANO_GESTAO_DADOS.md
+gravado: 00_projeto/PLANO_GESTAO_DADOS.md (7 seções)
+# opções: --repositorio Zenodo  --licenca CC-BY-4.0  --forcar</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O plano nasce com o projeto (manual de Metodologia) e é o que o comitê de ética e o financiador vão ler. O script escreve o esqueleto em Markdown; o DMPTool faz o mesmo com o modelo do financiador. As regras 3-2-1, «dado bruto intocado» e «dado licenciado fora do repositório» vêm do manual irmão de <a href="https://dados.mirandastech.com.br/">Dados</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s20" data-title="LGPD, TCLE e anonimização">
+  <div class="inner">
+    <div class="kicker-part rv">Dados<span>2 de 5 · regras herdadas dos manuais irmãos · deposito_zenodo.py (Figura 27)</span></div>
+    <h2 class="rv">LGPD, TCLE e anonimização: o participante autorizou o quê? — o que sai, o que fica e o que nunca entra num depósito</h2>
+    <div class="two rv">
+      <div>
+        <div class="compare">
+          <div><div class="cmp-h">Pode ser depositado</div><ul>
+            <li>Dados <strong>anonimizados</strong> de forma irreversível, quando o TCLE previu o compartilhamento</li>
+            <li>Dados agregados, tabelas de resultados, medições de equipamentos sem pessoa identificável</li>
+            <li>Instrumentos, roteiros, codebook, dicionário de dados, scripts de análise</li>
+            <li>Trechos de entrevista só se o TCLE autorizou e depois de anonimizados</li>
+          </ul></div>
+          <div><div class="cmp-h">Nunca entra — nem em depósito «restrito»</div><ul>
+            <li><strong>Dado pessoal</strong> (LGPD): nome, CPF, e-mail, voz, imagem, prontuário, localização precisa</li>
+            <li>Gravações e transcrições completas de entrevistas</li>
+            <li>O que o TCLE não autorizou compartilhar — mesmo anonimizado</li>
+            <li>Dados de terceiros sob licença (bases pagas, exportações completas, planilhas cedidas)</li>
+            <li>O dado bruto, que fica intocado e guardado conforme o <span class="gterm" tabindex="0" data-t="PGD (plano de gestão de dados)" data-d="Documento do projeto com o que será coletado, documentado, protegido, guardado, compartilhado e por quem; DMP em inglês; sete seções no plano_gestao_dados.py.">PGD</span>, fora do repositório público</li>
+          </ul></div>
+        </div>
+      </div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A pergunta não é «isto é sensível?», é «o participante autorizou <em>isto</em> a ser compartilhado <em>assim</em>?» — a resposta está no TCLE aprovado pelo comitê de ética. Anonimização é irreversível ou não é anonimização: apagar a coluna do nome e manter CPF, data de nascimento e CEP não anonimiza. Documente no <span class="gterm" tabindex="0" data-t="PGD (plano de gestão de dados)" data-d="Documento do projeto com o que será coletado, documentado, protegido, guardado, compartilhado e por quem; DMP em inglês; sete seções no plano_gestao_dados.py.">PGD</span> o que foi removido e como; o README do depósito diz que os dados pessoais não estão ali e por quê.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>«Depósito restrito resolve».</strong> No Zenodo os metadados são sempre públicos e os arquivos «restritos» ainda são um depósito num servidor de terceiros: dado pessoal não vai para lá. Na demonstração (Figura 27), o <code>deposito_zenodo.py</code> parou com <span style="color:var(--stop);font-weight:600">BLOQUEIO</span> ao achar um padrão de CPF em <code>participantes.csv</code> — o arquivo saiu e ficou só o derivado anonimizado.</p></div>
+        <div class="note"><span class="blabel">Não é aconselhamento jurídico</span><p>O que pode ou não ser compartilhado depende do TCLE, do comitê de ética, do programa e da instituição; em dúvida, pergunte antes de depositar — depósito publicado não se apaga (Parte 4).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s21" data-title="Princípios FAIR">
+  <div class="inner">
+    <div class="kicker-part rv">Dados<span>3 de 5 · gofair.foundation/fair-principles · Wilkinson et al. (2016) · captura de 09/09/2026</span></div>
+    <h2 class="rv">Princípios FAIR: encontrável, acessível, interoperável e reutilizável — o que cada letra pede do seu depósito</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_23_fair.jpg" width="1920" height="938" alt="Página FAIR Principles da GO FAIR Foundation, listando os princípios de F1 a R1.3"></div><figcaption><b>Figura 16</b> «FAIR Principles», em gofair.foundation (captura de 09/09/2026, sem login): os princípios F1–F4, A1–A2, I1–I3 e R1–R1.3, publicados por Wilkinson et al. em <em>Scientific Data</em> (2016). FAIR descreve dados <em>e</em> metadados; não exige que o dado seja aberto — exige que seja encontrável e descrito.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:130px">Princípio</th><th>O que pede</th><th style="width:230px">No Zenodo (checklist do script)</th></tr></thead><tbody>
+          <tr><td><b>F</b>indable</td><td>F1 identificador global único e persistente; F2 metadados ricos; F3 os metadados incluem o identificador do dado; F4 registrados/indexados em recurso pesquisável</td><td>DOI ao publicar (F1); título, autores, descrição, palavras-chave (F2); indexado (F4)</td></tr>
+          <tr><td><b>A</b>ccessible</td><td>A1 recuperáveis pelo identificador via protocolo padronizado (A1.1 aberto, gratuito, universal; A1.2 autenticação/autorização quando necessário); A2 metadados acessíveis mesmo sem os dados</td><td>HTTPS/DOI (A1); metadados sempre públicos, mesmo com arquivos restritos (A2)</td></tr>
+          <tr><td><b>I</b>nteroperable</td><td>I1 linguagem formal e compartilhada; I2 vocabulários FAIR; I3 referências qualificadas a outros (meta)dados</td><td>Formatos abertos (CSV, ODS, TXT, JSON), não proprietários (I1/I2)</td></tr>
+          <tr><td><b>R</b>eusable</td><td>R1 atributos precisos e relevantes: R1.1 licença clara; R1.2 proveniência detalhada; R1.3 padrões da comunidade</td><td>Licença declarada (R1.1); README com origem, método e versão (R1.2); dicionário de dados, unidades, codebook (R1.3)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>FAIR não é «aberto»: um dado sob embargo ou com acesso mediante autorização (A1.2) pode ser FAIR, desde que tenha DOI, metadados públicos e licença. O <code>deposito_zenodo.py</code> imprime o checklist F1, F2, F4, A1, A2, I1/I2, R1.1, R1.2 e R1.3 a cada execução (Figuras 27 e 28) — o que falta aparece como «[preencher]» ou «falta README».</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s22" data-title="re3data: achar o repositório">
+  <div class="inner">
+    <div class="kicker-part rv">Dados<span>4 de 5 · re3data.org · captura de 09/09/2026</span></div>
+    <h2 class="rv">re3data: o registro global de repositórios de dados — para achar o da sua área antes de cair no repositório generalista</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_26_re3data.jpg" width="1920" height="938" alt="Página inicial do re3data, registro de repositórios de dados de pesquisa, com o número de repositórios listados"></div><figcaption><b>Figura 17</b> re3data.org (captura de 09/09/2026, sem login): «registro global de repositórios de dados de pesquisa de todas as disciplinas», com 3.523 repositórios na home; mantido pelo Karlsruhe Institute of Technology e pelas Purdue University Libraries, integrado ao DataCite. Filtra por área, país, certificação e padrão de metadados.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:230px">Tipo de repositório</th><th>Quando</th><th style="width:210px">Exemplos neste manual</th></tr></thead><tbody>
+          <tr><td><b>Da área (disciplinar)</b></td><td>Quando a comunidade já tem um — padrões de metadados e vocabulários da área (R1.3); ache no <span class="gterm" tabindex="0" data-t="re3data" data-d="Registro global de repositórios de dados de pesquisa (3.523 na home); filtra por área, país, certificação e padrão de metadados.">re3data</span></td><td>Filtros por área do re3data</td></tr>
+          <tr><td><b>Da instituição</b></td><td>Quando a universidade mantém um e o programa pede</td><td>Filtro por país e certificação</td></tr>
+          <tr><td><b>Generalista</b></td><td>Quando não há repositório da área ou o conjunto é multidisciplinar; «catch-all»</td><td>Zenodo (Parte 4), Figshare, OSF; Dataverse (só o nome)</td></tr>
+          <tr><td><b>Registro de estudos</b></td><td>Não é repositório de dados: guarda o plano</td><td>OSF Registries, PROSPERO, ReBEC (Parte 2)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Antes de depositar no Zenodo, gaste dez minutos no re3data com o filtro da sua área: se existir um repositório disciplinar certificado, ele costuma ser mais encontrado por quem reutiliza o tipo de dado que você produz. O Zenodo é o padrão deste manual porque é gratuito, generalista e emite DOI sem espera — não porque seja o melhor para toda área.</p></div>
+        <div class="note"><span class="blabel">Não capturado</span><p>O Dataverse (dataverse.org) devolveu «Access Denied» ao navegador automatizado em 09/09/2026 e aparece só pelo nome.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s23" data-title="Licenças Creative Commons e de software">
+  <div class="inner">
+    <div class="kicker-part rv">Dados<span>5 de 5 · creativecommons.org (deed CC BY 4.0 em português) · chooser-beta.creativecommons.org · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Licenças: CC BY 4.0 para texto e dados, licença de software para código, CC0 para metadados — sem licença, ninguém pode reutilizar</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_21_creativecommons_chooser.jpg" width="1920" height="938" alt="Creative Commons Chooser com o título Choose a License for Your Work e as perguntas em passos"></div><figcaption><b>Figura 18</b> O Chooser da Creative Commons (captura de 09/09/2026, sem login): «Choose a License for Your Work», em passos — «Do you know which license you need?», «Which license do you need?» e os detalhes de atribuição. Ao final, entrega o texto e o código da licença para colar no README.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/ca_22_cc_by.jpg" width="1920" height="938" alt="Deed da licença CC BY 4.0 em português, com o que a licença permite e a condição de atribuição"></div><figcaption><b>Figura 19</b> O deed da CC BY 4.0 em português (captura de 09/09/2026, sem login): permite <strong>compartilhar</strong> («copiar e redistribuir o material em qualquer suporte ou formato para qualquer fim, mesmo que comercial») e <strong>adaptar</strong> («remixar, transformar e criar a partir do material…»); condição: <strong>atribuição</strong> (crédito, link da licença, indicar mudanças; sem sugerir apoio do licenciante); sem restrições adicionais, jurídicas ou tecnológicas.</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:170px">O quê</th><th>Licença recomendada neste manual</th><th style="width:250px">Por quê</th></tr></thead><tbody>
+        <tr><td><b>Dados e texto</b> (planilhas, README, PGD, preprint)</td><td>CC BY 4.0</td><td>Reutilização máxima com crédito; é a licença do SciELO Preprints e desta série</td></tr>
+        <tr><td><b>Código</b> (scripts, notebooks)</td><td>Licença de software: MIT, Apache 2.0 ou GPL</td><td>CC não foi feita para software; a escolha está no manual de <a href="https://git.mirandastech.com.br/">Git</a></td></tr>
+        <tr><td><b>Metadados</b></td><td>CC0</td><td>É o que o Zenodo aplica aos metadados (Parte 4): sem barreira para catálogos e buscadores</td></tr>
+        <tr><td><b>Outras da família</b></td><td>BY-SA, BY-NC, BY-ND, BY-NC-SA, BY-NC-ND</td><td>Só nomeadas aqui: cada restrição (NC, ND) reduz a reutilização; decida com o programa</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A licença é escolhida <em>antes</em> do upload e declarada no README, no <code>.zenodo.json</code> (<code>"license": "cc-by-4.0"</code>) e no campo do formulário: o Zenodo exige licença para arquivos públicos. Um depósito sem licença é público mas não reutilizável — ninguém pode legalmente copiar. Dados de terceiros têm a licença deles e não entram.</p></div>
+        <div class="note"><span class="blabel">Não é aconselhamento jurídico</span><p>Coautores, financiador e a instituição podem ter regras próprias sobre licenças; o Chooser e o deed explicam os termos, não decidem por você.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 4 ===================== -->
+<section class="slide divider" id="s24" data-title="Parte 4 · Depositar no Zenodo"><div class="inner"><div class="kicker-part rv">Parte 4<span>Depositar no Zenodo</span></div><h2 class="rv">O que é o Zenodo; políticas; upload passo a passo; versões; DOI de conceito × DOI de versão; sandbox e comunidades; <code>deposito_zenodo.py</code> com bloqueio e limpo; GitHub → Zenodo</h2><p class="rv">Um repositório gratuito, operado pelo CERN, que emite DOI na hora e guarda «pela vida do repositório». Nove slides: as páginas públicas e a ajuda oficial em capturas de 09/09/2026, e o script que confere a pasta antes de o aluno fazer o upload — porque «Publish» não se desfaz.</p></div><div class="num">04</div></section>
+
+<section class="slide" id="s25" data-title="O que é o Zenodo">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>1 de 9 · zenodo.org · about.zenodo.org · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Zenodo: o repositório «catch-all» do CERN e do OpenAIRE — dados, software e outros artefatos de qualquer área, gratuito, com DOI da DataCite</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_09_zenodo_home.jpg" width="1920" height="938" alt="Página inicial do Zenodo com as seções Featured communities, Recent uploads e Why use Zenodo"></div><figcaption><b>Figura 20</b> A home de zenodo.org (captura de 09/09/2026, sem login): «Featured communities» (EU Open Research Repository), «Recent uploads» e «Why use Zenodo?» — Safe, Trusted, Citeable, No waiting time, Open or closed, Versioning, GitHub integration, Usage statistics.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/ca_10_zenodo_about.jpg" width="1920" height="938" alt="Página About Zenodo, descrevendo o repositório construído por pesquisadores, operado pelo CERN com o OpenAIRE"></div><figcaption><b>Figura 21</b> «About Zenodo», em about.zenodo.org (captura de 09/09/2026, sem login): repositório «catch-all» construído por pesquisadores, «open in every sense», operado pelo CERN com o OpenAIRE e financiado pela Comissão Europeia; aceita «dados, software e outros artefatos» de qualquer área e em qualquer estágio; DOI via DataCite; desde maio de 2013.</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:190px">«Why use Zenodo?»</th><th>O que significa para o seu depósito</th></tr></thead><tbody>
+        <tr><td><b>Safe · Trusted</b></td><td>Guardado no CERN Data Centre com réplicas; preservação «pela vida do repositório» (slide seguinte)</td></tr>
+        <tr><td><b>Citeable · No waiting time</b></td><td>DOI da DataCite emitido ao publicar, sem fila de curadoria</td></tr>
+        <tr><td><b>Open or closed</b></td><td>Arquivos públicos, restritos ou sob embargo; metadados sempre públicos</td></tr>
+        <tr><td><b>Versioning</b></td><td>Nova versão = novo registro com DOI próprio, ligado ao DOI de conceito (slides «Versões» e «DOI de conceito × versão»)</td></tr>
+        <tr><td><b>GitHub integration</b></td><td>Cada release do repositório vira um DOI (último slide desta parte)</td></tr>
+        <tr><td><b>Usage statistics</b></td><td>Visualizações e downloads por registro</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O Zenodo é o destino padrão deste manual para o conjunto de dados, o material suplementar e o código com release — o que não tem repositório de área (re3data) e precisa de DOI hoje. Conta gratuita, criada pelo aluno («qualquer pessoa pode se registrar como usuário»); este manual não fez login nem depositou nada.</p></div>
+        <div class="note"><span class="blabel">O que o manual não afirma</span><p>Número de usuários ou de registros do Zenodo: não conferidos nesta data.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s26" data-title="Políticas do Zenodo">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>2 de 9 · about.zenodo.org/policies «General Policies v1.0» · captura de 09/09/2026</span></div>
+    <h2 class="rv">Políticas: 50 GB por registro, metadados em CC0, licença obrigatória para arquivos públicos, preservação «pela vida do repositório»</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_13_zenodo_policies.jpg" width="1920" height="938" alt="Página General Policies v1.0 do Zenodo, com as políticas de conteúdo, metadados, preservação e retirada"></div><figcaption><b>Figura 22</b> «General Policies v1.0», em about.zenodo.org/policies (captura de 09/09/2026, sem login): o que pode ser depositado, limites, licença dos metadados, preservação e quem pode ter conta.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:190px">Política (09/09/2026)</th><th>O que diz</th></tr></thead><tbody>
+          <tr><td><b>Conteúdo</b></td><td>«Qualquer status de dado, de qualquer estágio do ciclo de vida»: dados, software, publicações, apresentações, outros</td></tr>
+          <tr><td><b>Tamanho</b></td><td>«Limite total de tamanho de arquivos por registro é <strong>50 GB</strong>; cotas maiores podem ser solicitadas caso a caso»</td></tr>
+          <tr><td><b>Metadados</b></td><td>Em JSON, licenciados em <strong>CC0</strong> (exceto e-mails); arquivos públicos precisam de licença declarada</td></tr>
+          <tr><td><b>Preservação</b></td><td>«Pela vida do repositório» — o CERN planeja ≥ 20 anos; dados no CERN Data Centre (Genebra) com réplicas; InvenioRDM; backups noturnos e MD5</td></tr>
+          <tr><td><b>Quem pode</b></td><td>«Qualquer pessoa pode se registrar como usuário»</td></tr>
+          <tr><td><b>Retirada</b></td><td>O DOI só é revogado por violação de política — não a pedido por arrependimento</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Duas consequências práticas: (1) o que você escreve nos metadados — título, descrição, palavras-chave, nomes — é CC0 e público para sempre, mesmo com arquivos restritos; (2) um registro publicado não some porque você mudou de ideia. O <code>deposito_zenodo.py</code> confere o total e o maior arquivo contra os 50 GB antes do upload.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s27" data-title="Upload passo a passo">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>3 de 9 · help.zenodo.org «Create new upload» · captura de 09/09/2026 · tela logada conforme a ajuda oficial</span></div>
+    <h2 class="rv">Upload passo a passo: arquivos → campos obrigatórios → visibilidade e embargo → «Reserve DOI» → «Preview» → «Publish» — e 45 dias para mexer nos arquivos</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_11_zenodo_help_upload.jpg" width="1920" height="938" alt="Página de ajuda do Zenodo Create new upload, com os passos do formulário de depósito"></div><figcaption><b>Figura 23</b> «Create new upload», em help.zenodo.org (captura de 09/09/2026, sem login): «Upload files» ou arrastar; até <strong>100 arquivos e 50 GB por upload</strong>; campos obrigatórios com estrela vermelha; visibilidade; «Reserve DOI»; «Preview»; «Publish». O formulário logado não foi capturado.</figcaption></figure>
+      <div>
+        <div class="flow">
+          <div class="node"><span class="nn">1</span><span class="nt">«Upload files» ou arrastar</span><span class="nd">Até 100 arquivos e 50 GB por upload; a pasta já conferida pelo <code>deposito_zenodo.py</code></span></div>
+          <div class="node"><span class="nn">2</span><span class="nt">Campos obrigatórios (estrela vermelha)</span><span class="nd"><b>Resource type</b> (publication, dataset, software…); <b>Title</b> («forneça um título claro e informativo»); <b>Creators</b> («Add creator», busca por ORCID/ROR; aparecem na citação); mais data de publicação, descrição e licença</span></div>
+          <div class="node"><span class="nn">3</span><span class="nt">Visibilidade e embargo</span><span class="nd">Arquivos públicos ou restritos; <strong>metadados sempre públicos</strong>; embargo opcional com data</span></div>
+          <div class="node"><span class="nn">4</span><span class="nt">«Reserve DOI»</span><span class="nd">O DOI existe antes de publicar, para ir no texto; perde-se se o rascunho for apagado; é registrado ao publicar</span></div>
+          <div class="node gate"><span class="nn">5</span><span class="nt">«Preview» → «Publish»</span><span class="nd">Depois de publicar, os arquivos só podem ser adicionados, removidos ou modificados por <strong>45 dias</strong>; os metadados, sempre</span></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Quem clica em «Publish» é o aluno, na própria conta, depois de ler o «Preview» como se fosse um revisor: título, autores com ORCID, licença, descrição com o link do README e do pré-registro. O <code>.zenodo.json</code> gerado pelo script serve de guia para preencher — o Zenodo lê esse arquivo na integração com o GitHub, mas no upload manual os campos são digitados.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s28" data-title="Versões">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>4 de 9 · help.zenodo.org «Manage versions» · captura de 09/09/2026</span></div>
+    <h2 class="rv">Versões: «New version» quando há arquivos atualizados; só metadados → edite o registro; cada versão é um registro com DOI próprio</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_12_zenodo_help_versioning.jpg" width="1920" height="938" alt="Página de ajuda do Zenodo Manage versions, com o botão verde New version e a explicação das versões"></div><figcaption><b>Figura 24</b> «Manage versions», em help.zenodo.org (captura de 09/09/2026, sem login): o botão verde «New version»; «Import files» reaproveita os arquivos da versão anterior; «View all versions» em «My uploads». Cada versão é «um registro separado com metadados, arquivos e identificador persistente próprios, ligado a todas as versões anteriores e futuras».</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:230px">Quero…</th><th>O que fazer (help.zenodo.org)</th></tr></thead><tbody>
+          <tr><td><b>Corrigir o título, a descrição, um autor</b></td><td>Editar o registro: metadados são editáveis sempre; o DOI não muda</td></tr>
+          <tr><td><b>Trocar ou acrescentar um arquivo até 45 dias após publicar</b></td><td>Editar o registro: os arquivos ainda podem ser adicionados, removidos ou modificados</td></tr>
+          <tr><td><b>Publicar dados atualizados, corrigidos ou ampliados</b></td><td>«New version»: novo registro, novo DOI, ligado aos anteriores; «Import files» traz os que não mudaram</td></tr>
+          <tr><td><b>Ver todas as versões</b></td><td>«View all versions» em «My uploads»; a página de cada registro lista as demais</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Uma versão nova por mudança nos dados que alguém pode ter usado: a correção de uma coluna, a inclusão de uma coleta. Não apague a anterior — quem citou o <span class="gterm" tabindex="0" data-t="DOI de versão" data-d="O DOI de uma versão específica — os arquivos exatos; cite-o para reprodução exata.">DOI de versão</span> continua achando exatamente o que usou. O que muda é o número no README e no <code>.zenodo.json</code>; o DOI de conceito (slide seguinte) continua o mesmo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s29" data-title="DOI de conceito × DOI de versão">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>5 de 9 · help.zenodo.org «Manage versions» · nomes usuais</span></div>
+    <h2 class="rv">DOI de conceito × DOI de versão: um identifica «a obra», o outro identifica exatamente os arquivos que você usou</h2>
+    <div class="two rv">
+      <div>
+        <div class="compare">
+          <div><div class="cmp-h">DOI de conceito</div><ul>
+            <li>Representa <em>todas</em> as versões do registro</li>
+            <li>Resolve sempre para a versão mais recente</li>
+            <li>Use no texto quando quiser apontar «a obra»: o conjunto de dados do projeto, o software</li>
+            <li>É o que vai no README como «DOI deste conjunto de dados»</li>
+          </ul></div>
+          <div><div class="cmp-h"><span class="gterm" tabindex="0" data-t="DOI de versão" data-d="O DOI de uma versão específica — os arquivos exatos; cite-o para reprodução exata.">DOI de versão</span></div><ul>
+            <li>Identifica uma versão: metadados, arquivos e identificador próprios</li>
+            <li>Nunca muda de conteúdo (fora os 45 dias após publicar)</li>
+            <li>Use quando o leitor precisa reproduzir exatamente: a versão que gerou a Tabela 3</li>
+            <li>É o que vai na seção de disponibilidade de dados do artigo</li>
+          </ul></div>
+        </div>
+        <div class="code"><div class="code-head">artigo — seção de disponibilidade de dados (exemplo ilustrativo; DOIs fictícios com «NNNNNNN»)</div><pre>Os dados limpos e os scripts estão depositados no Zenodo:
+conjunto de dados, versão 1.1 (a usada nas análises deste artigo): https://doi.org/10.5281/zenodo.NNNNNNN
+todas as versões (DOI de conceito): https://doi.org/10.5281/zenodo.NNNNNNN
+Pré-registro (OSF, com a data do registro): https://doi.org/[DOI do registro]</pre></div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:230px">Onde citar</th><th>Qual DOI</th></tr></thead><tbody>
+          <tr><td><b>Métodos / disponibilidade de dados</b></td><td>De versão — a que gerou os resultados</td></tr>
+          <tr><td><b>Referências</b></td><td>De versão, com o número da versão na referência</td></tr>
+          <tr><td><b>README, página do projeto, currículo</b></td><td>De conceito — «a obra»</td></tr>
+          <tr><td><b>Preprint ou tese que ainda vai mudar de dado</b></td><td>De conceito no texto geral; de versão onde houver resultado</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Os dois nomes são o uso corrente para o que a ajuda do Zenodo descreve: cada versão é um registro com identificador próprio, ligado a todas as versões anteriores e futuras. Copie os dois DOIs para o <code>PROGRESSO.md</code> assim que publicar. Trocar um pelo outro é um dos erros da lista final: citar o de conceito onde se precisava do de versão faz o leitor abrir dados diferentes dos usados.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>DOI reservado ≠ DOI publicado.</strong> O «Reserve DOI» vale para escrever o texto, mas só resolve depois do «Publish» — e some se o rascunho for apagado. Não submeta o artigo com um DOI reservado de um rascunho que ainda pode ser descartado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s30" data-title="Sandbox e comunidades">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>6 de 9 · sandbox.zenodo.org · zenodo.org/communities · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Treinar no Sandbox antes do real — e comunidades para agrupar depósitos do grupo, do programa ou do projeto</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_30_zenodo_sandbox.jpg" width="1920" height="938" alt="Página inicial do Zenodo Sandbox com o aviso de que é a instância de testes"></div><figcaption><b>Figura 25</b> sandbox.zenodo.org (captura de 09/09/2026, sem login): «⚠️ This is the Zenodo Sandbox instance, used for testing purposes». A mesma interface do Zenodo, para treinar o upload sem publicar nada de verdade; o manual só capturou a página — nenhum depósito de teste foi feito.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/ca_33_zenodo_communities.jpg" width="1920" height="938" alt="Página Communities do Zenodo com a lista de comunidades e o botão New community"></div><figcaption><b>Figura 26</b> zenodo.org/communities (captura de 09/09/2026, sem login): as comunidades — coleções curadas de registros — e o botão «New community».</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:190px">Instância</th><th>Para</th><th style="width:250px">Cuidado</th></tr></thead><tbody>
+        <tr><td><b><span class="gterm" tabindex="0" data-t="Sandbox" data-d="sandbox.zenodo.org: a instância de testes do Zenodo; nada ali é real.">Sandbox</span></b> (sandbox.zenodo.org)</td><td>Ensaiar o formulário, o «Reserve DOI», o «Preview» e o «Publish» com arquivos de teste</td><td>Nada ali é real: o DOI do Sandbox não vale, e o conteúdo é de testes</td></tr>
+        <tr><td><b>Zenodo</b> (zenodo.org)</td><td>O depósito verdadeiro, com DOI da DataCite</td><td>«Publish» é irreversível; confira a URL antes de clicar</td></tr>
+        <tr><td><b>Comunidade</b></td><td>Agrupar os depósitos do laboratório, do programa ou de um projeto com vários conjuntos</td><td>Criada com «New community»; o manual não descreve a curadoria além do botão</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Primeira vez no Zenodo? Faça o percurso inteiro no Sandbox com uma pasta de teste, depois repita no zenodo.org com a pasta conferida pelo <code>deposito_zenodo.py</code>. O aviso amarelo no topo é a diferença: se ele está lá, você está no Sandbox — e um DOI do Sandbox num artigo é um dos erros da lista final.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s31" data-title="deposito_zenodo.py: BLOQUEIO e AVISO">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>7 de 9 · demonstração de 09/09/2026 · Python 3, só biblioteca padrão, só leitura</span></div>
+    <h2 class="rv"><code>deposito_zenodo.py</code>: a conferência antes do upload — tamanho, README, segredos, CPF, formatos proprietários, e o checklist FAIR</h2>
+    <figure class="rv"><div class="shot"><img src="capturas/ca_t2_deposito_zenodo_bloqueio.jpg" width="1920" height="635" alt="Terminal: deposito_zenodo.py lista 4 arquivos e 0,3 MiB, grava .zenodo.json, mostra BLOQUEIO por padrão de CPF em participantes.csv e AVISO de README ausente, e imprime o checklist FAIR e os próximos passos do aluno"></div><figcaption><b>Figura 27</b> A sessão de 09/09/2026 (execução real; pasta e autora fictícias): <code>python3 scripts/deposito_zenodo.py dados_para_deposito --titulo "…" --autores "Exemplo, Aluna" --tipo dataset --licenca CC-BY-4.0 --palavras "…"</code> lista «4 arquivos, 0.3 MiB no total; maior: planilha_resumo.ods», grava o <code>.zenodo.json</code>, e para com <span style="color:var(--stop);font-weight:600">BLOQUEIO</span> («participantes.csv contém padrão de CPF — anonimize antes de depositar») e <span style="color:var(--amber);font-weight:600">AVISO</span> («falta README»); segue o checklist FAIR (F1, F2, F4, A1, A2, I1/I2, R1.1, R1.2, R1.3) e «Próximos passos (do aluno)».</figcaption></figure>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:190px">O que confere</th><th>Como aparece</th></tr></thead><tbody>
+        <tr><td><b>Tamanho e quantidade</b></td><td>Total e maior arquivo, contra 50 GB por registro e 100 arquivos por upload</td></tr>
+        <tr><td><b>README</b></td><td>AVISO se faltar: «o que é, como foi coletado, variáveis/dicionário de dados, como citar»</td></tr>
+        <tr><td><b>Segredos e dados pessoais</b></td><td>Arquivos de segredo e padrão de CPF em arquivos de texto → BLOQUEIO</td></tr>
+        <tr><td><b>Formatos proprietários</b></td><td>Aviso para preferir formatos abertos (I1/I2)</td></tr>
+        <tr><td><b>Saída</b></td><td><code>.zenodo.json</code> gravado; lista de BLOQUEIO/AVISO ou «OK nada a corrigir antes do upload»; checklist FAIR; próximos passos</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="code"><div class="code-head">terminal — uso</div><pre>python3 scripts/deposito_zenodo.py &lt;pasta&gt; --titulo "…" --autores "Sobrenome, Nome" \
+    --tipo dataset|software|publication|other --licenca CC-BY-4.0 \
+    [--descricao "…" --palavras "a;b;c" --orcid 0000-0000-0000-0000 --afiliacao "…"]</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O script só lê a pasta e grava o <code>.zenodo.json</code>: não cria conta, não envia arquivo, não reserva DOI. Um BLOQUEIO é decisão sua de resolver antes do upload — na demonstração, o arquivo com CPF saiu da pasta e ficou só o derivado anonimizado (slide seguinte). O upload, o «Reserve DOI» e o «Publish» são cliques do aluno.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s32" data-title="Depósito limpo, .zenodo.json e PGD">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>8 de 9 · demonstração de 09/09/2026</span></div>
+    <h2 class="rv">Depósito limpo: «OK nada a corrigir antes do upload», o <code>.zenodo.json</code> gerado e o plano de gestão de dados em sete seções</h2>
+    <figure class="rv"><div class="shot"><img src="capturas/ca_t3_deposito_ok_pgd.jpg" width="1920" height="1030" alt="Terminal: rm do participantes.csv, criação do README.md, deposito_zenodo.py respondendo OK nada a corrigir antes do upload com o checklist FAIR, cat do .zenodo.json e plano_gestao_dados.py gravando o PGD com 7 seções"></div><figcaption><b>Figura 28</b> A sessão de 09/09/2026 (execução real; pasta e autora fictícias): <code>rm dados_para_deposito/participantes.csv</code> («dado pessoal sai; fica só o derivado anonimizado»), um <code>README.md</code> criado, e o <code>deposito_zenodo.py</code> com <code>--descricao</code> responde «5 arquivos, 0.3 MiB no total» e <span style="color:var(--go);font-weight:600">OK</span> «nada a corrigir antes do upload», com o checklist FAIR todo marcado; <code>cat .zenodo.json</code> mostra <code>title</code>, <code>upload_type</code>, <code>description</code>, <code>creators</code>, <code>access_right: open</code>, <code>license: cc-by-4.0</code>, <code>keywords</code>; por fim, <code>plano_gestao_dados.py</code> grava «00_projeto/PLANO_GESTAO_DADOS.md (7 seções)».</figcaption></figure>
+    <div class="two rv">
+      <div>
+        <div class="code"><div class="code-head">.zenodo.json — o gerado na demonstração (Figura 28); serve de guia para o formulário e é lido na integração com o GitHub</div><pre>{
+  "title": "Medições de guindastes: dados limpos e resultados (demonstração)",
+  "upload_type": "dataset",
+  "description": "Dados limpos e resultados da demonstração; ver README.",
+  "creators": [ { "name": "Exemplo, Aluna" } ],
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "keywords": []
+}</pre></div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Campo</th><th>No formulário do Zenodo</th></tr></thead><tbody>
+          <tr><td><code>title</code> · <code>upload_type</code></td><td>«Title» e «Resource type» (obrigatórios)</td></tr>
+          <tr><td><code>creators</code></td><td>«Creators» → «Add creator»; com <code>--orcid</code> e <code>--afiliacao</code> o script inclui os dois</td></tr>
+          <tr><td><code>description</code> · <code>keywords</code></td><td>Descrição e palavras-chave (F2); <code>--palavras "a;b;c"</code></td></tr>
+          <tr><td><code>access_right</code> · <code>license</code></td><td>Visibilidade dos arquivos e licença (R1.1)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Guarde o <code>.zenodo.json</code> na pasta depositada e no repositório do código: ele é a versão de texto dos metadados e, no GitHub, é o que o Zenodo lê ao arquivar a release. Depois do «Publish», anote o DOI de versão e o de conceito no README, no <code>PLANO_GESTAO_DADOS.md</code> (seção 5) e no <code>PROGRESSO.md</code>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s33" data-title="GitHub → Zenodo: release = DOI">
+  <div class="inner">
+    <div class="kicker-part rv">Depositar<span>9 de 9 · help.zenodo.org «GitHub and Software» · manual irmão de Git · sem captura nova</span></div>
+    <h2 class="rv">GitHub → Zenodo: o código ganha DOI a cada <em>release</em>, com metadados lidos do <code>.zenodo.json</code> ou do <code>CITATION.cff</code></h2>
+    <div class="two rv">
+      <div>
+        <div class="flow">
+          <div class="node"><span class="nn">1</span><span class="nt">Repositório público com licença</span><span class="nd">README, LICENSE (MIT, Apache 2.0 ou GPL) e <code>CITATION.cff</code> ou <code>.zenodo.json</code> na raiz</span></div>
+          <div class="node"><span class="nn">2</span><span class="nt">Ligar a conta</span><span class="nd">No Zenodo, logado com o GitHub, ativar o repositório na página GitHub do perfil</span></div>
+          <div class="node gate"><span class="nn">3</span><span class="nt">Publicar a release</span><span class="nd">Cada <em>release</em> vira um registro no Zenodo com DOI próprio; o conjunto tem DOI de conceito</span></div>
+          <div class="node"><span class="nn">4</span><span class="nt">Fechar o ciclo</span><span class="nd">O DOI vai para o <code>CITATION.cff</code>, o README e o artigo</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:190px">Arquivo</th><th>Para quê</th></tr></thead><tbody>
+          <tr><td><b><code>.zenodo.json</code></b></td><td>Metadados do registro no formato do Zenodo (o mesmo que o <code>deposito_zenodo.py</code> grava)</td></tr>
+          <tr><td><b><code>CITATION.cff</code></b></td><td>Como citar o repositório; o GitHub mostra «Cite this repository» e o Zenodo também o lê</td></tr>
+          <tr><td><b>Release</b></td><td>Uma tag publicada com título e notas; é o que o Zenodo arquiva — um DOI por release</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Dados vão pelo upload manual (slides anteriores); código vai pelo GitHub → Zenodo, com uma <em>release</em> por marco citável (a versão que gerou os resultados). Os passos com nomes de botão, as condições e as capturas estão no manual irmão de <a href="https://git.mirandastech.com.br/">Git</a>, que trata a integração inteira; aqui fica só o princípio: release = DOI.</p></div>
+        <div class="note"><span class="blabel">Sem captura nova</span><p>A página «GitHub and Software» de help.zenodo.org foi lida em 09/09/2026 e é a fonte desta descrição; as telas logadas do Zenodo e do GitHub não foram capturadas.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 5 ===================== -->
+<section class="slide divider" id="s34" data-title="Parte 5 · Preprints, identidade e onde publicar"><div class="inner"><div class="kicker-part rv">Parte 5<span>Preprints, identidade e onde publicar</span></div><h2 class="rv">Preprint, postprint, versão publicada e embargo; SciELO Preprints e arXiv; OSF Preprints e Figshare; a política do periódico no Open policy finder; ORCID</h2><p class="rv">O artigo pronto pode ficar público antes da revisão por pares — se a política do periódico permitir. Cinco slides: os conceitos, quatro servidores em capturas de 09/09/2026, onde conferir a política e o identificador que liga tudo à pessoa certa.</p></div><div class="num">05</div></section>
+
+<section class="slide" id="s35" data-title="Preprint, postprint, versão publicada e embargo">
+  <div class="inner">
+    <div class="kicker-part rv">Preprints<span>1 de 5 · conceitos, sem números</span></div>
+    <h2 class="rv">Preprint, postprint, versão publicada e embargo: três versões do mesmo artigo — e o que cada uma pode ou não pode fazer depende do periódico</h2>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:190px">Versão</th><th>O que é</th><th style="width:270px">Onde costuma ficar</th></tr></thead><tbody>
+        <tr><td><b>Preprint</b></td><td>O manuscrito como foi submetido, antes da revisão por pares; tem DOI e data no servidor</td><td>SciELO Preprints, arXiv, OSF Preprints (slides seguintes)</td></tr>
+        <tr><td><b><span class="gterm" tabindex="0" data-t="Preprint · postprint" data-d="Preprint: o manuscrito antes da revisão por pares, com DOI e data; postprint: a versão aceita, sem a diagramação da editora.">Postprint</span></b> (manuscrito aceito)</td><td>O texto depois da revisão por pares, sem a diagramação da editora</td><td>Repositório institucional ou generalista, conforme a política do periódico</td></tr>
+        <tr><td><b>Versão publicada</b> (versão de registro)</td><td>O PDF final da editora, com paginação e DOI do periódico</td><td>O site do periódico; em repositórios só quando a política permite</td></tr>
+        <tr><td><b>Embargo</b></td><td>O prazo, definido pelo periódico, antes de uma versão poder ficar aberta num repositório</td><td>Varia por periódico e versão — conferir no Open policy finder</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Um preprint não é «publicar duas vezes»: é a mesma obra, numa versão declarada, antes da revisão. O que muda de periódico para periódico é (1) se aceita artigos que já têm preprint, (2) qual versão pode ir a um repositório e (3) com que embargo. As três respostas estão na política do periódico — o manual não afirma nenhuma política específica nem prazos.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Depositar o PDF da editora «porque é meu artigo».</strong> A versão publicada costuma ser a mais restrita; o que geralmente pode ficar aberto é o postprint, depois do embargo. Subir o PDF da editora no Zenodo sem conferir é um dos erros da lista final.</p></div>
+        <div class="note"><span class="blabel">Ligar as versões</span><p>Declare o preprint na submissão e, quando o artigo sair, ligue o preprint à versão publicada (o SciELO Preprints faz isso automaticamente) — o leitor que chega pelo preprint encontra a versão revisada.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s36" data-title="SciELO Preprints e arXiv">
+  <div class="inner">
+    <div class="kicker-part rv">Preprints<span>2 de 5 · preprints.scielo.org · arxiv.org · info.arxiv.org/about · capturas de 09/09/2026</span></div>
+    <h2 class="rv">SciELO Preprints: em português, CC BY e DOI ao aceitar; arXiv: oito áreas, sem taxas, moderação e endosso — sem revisão por pares</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_17_scielo_preprints.jpg" width="1920" height="938" alt="Página inicial do SciELO Preprints em português, com a lista de preprints mais recentes e o botão Registrar-se"></div><figcaption><b>Figura 29</b> preprints.scielo.org (captura de 09/09/2026, sem login): a home em português, com «Preprints mais recentes» e «Registrar-se». «Coleção integrante do SciELO», sobre o software Open Preprint Systems (PKP); nove grandes áreas; licença CC BY; DOI imediatamente após a aceitação; ligação automática com a versão publicada.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/ca_18_arxiv.jpg" width="1920" height="938" alt="Página inicial do arXiv com a lista de áreas: física, matemática, ciência da computação e as demais"></div><figcaption><b>Figura 30</b> arxiv.org (captura de 09/09/2026, sem login): a lista de áreas. «Plataforma de compartilhamento de pesquisa curada e aberta para qualquer pessoa»; oito áreas — física, matemática, ciência da computação, biologia quantitativa, finanças quantitativas, estatística, engenharia elétrica e sistemas, economia; «não há taxas»; «mais de três milhões de artigos»; organização independente sem fins lucrativos desde 2026 (antes hospedado pela Cornell).</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:150px">Servidor</th><th>Triagem</th><th>Licença · DOI</th><th style="width:230px">Para quem</th></tr></thead><tbody>
+        <tr><td><b>SciELO Preprints</b></td><td>Postagem automática para autores com 3 artigos com DOI ativo no Crossref ou 2 publicações recentes; senão, triagem básica; declaração de ética</td><td>CC BY; DOI imediatamente após a aceitação</td><td>Qualquer das nove grandes áreas; home em português; ligação automática com a versão publicada</td></tr>
+        <tr><td><b>arXiv</b></td><td>Moderação (relevância e valor acadêmico) e endosso; <strong>sem revisão por pares</strong></td><td>Sem taxas; licença do preprint não conferida nesta data</td><td>As oito áreas listadas; engenharia elétrica e sistemas, computação e estatística incluídas</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Escolha pelo público: quem vai ler e citar o seu artigo procura no SciELO ou no arXiv? Para um trabalho em português com leitores no Brasil e na América Latina, o SciELO Preprints; para engenharia, computação e estatística com leitores internacionais, o arXiv. Nos dois, o preprint sai com data e DOI, o que também «reivindica a ideia antes» (COS). Nenhum preprint foi depositado para este manual.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s37" data-title="OSF Preprints e Figshare">
+  <div class="inner">
+    <div class="kicker-part rv">Preprints<span>3 de 5 · osf.io/preprints · figshare.com · capturas de 09/09/2026</span></div>
+    <h2 class="rv">OSF Preprints e Figshare — e a tabela comparativa dos quatro servidores, só com o que foi conferido</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_05_osf_preprints.jpg" width="1920" height="938" alt="Página OSF Preprints com o botão Add a preprint e a busca por assunto"></div><figcaption><b>Figura 31</b> osf.io/preprints (captura de 09/09/2026, sem login): «Add a preprint» e a busca por assunto. O servidor de preprints do Center for Open Science, o mesmo do OSF.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/ca_19_figshare.jpg" width="1920" height="938" alt="Página inicial do Figshare com o slogan store, share, discover research"></div><figcaption><b>Figura 32</b> figshare.com (captura de 09/09/2026, sem login): «store, share, discover research» — repositório generalista; o Figshare+ atende conjuntos grandes (TB) mediante pagamento, sem valores conferidos.</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:150px">Servidor</th><th>Quem mantém</th><th>Custo</th><th>O que foi conferido (09/09/2026)</th></tr></thead><tbody>
+        <tr><td><b>SciELO Preprints</b></td><td>SciELO (PKP Open Preprint Systems)</td><td>Gratuito</td><td>Nove áreas; triagem ou postagem automática; CC BY; DOI ao aceitar; liga à versão publicada</td></tr>
+        <tr><td><b>arXiv</b></td><td>Organização independente sem fins lucrativos (desde 2026)</td><td>«Não há taxas»</td><td>Oito áreas; moderação e endosso; sem revisão por pares; mais de três milhões de artigos</td></tr>
+        <tr><td><b>OSF Preprints</b></td><td>Center for Open Science</td><td>Gratuito</td><td>«Add a preprint»; busca por assunto; mesma conta do OSF</td></tr>
+        <tr><td><b>Figshare</b></td><td>Figshare</td><td>Generalista; Figshare+ pago para TB</td><td>«Store, share, discover research»; sem números conferidos</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O OSF Preprints serve a quem já tem o projeto e o pré-registro no OSF e quer tudo no mesmo lugar; o Figshare é repositório generalista, alternativa ao Zenodo para dados e figuras. A tabela só traz o que as páginas públicas diziam em 09/09/2026: licenças do arXiv e do OSF Preprints, prazos de moderação e preços do Figshare+ não foram conferidos e não estão aqui.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s38" data-title="Política do periódico: Open policy finder">
+  <div class="inner">
+    <div class="kicker-part rv">Preprints<span>4 de 5 · openpolicyfinder.jisc.ac.uk (Jisc; sucessor do Sherpa Romeo) · captura de 09/09/2026</span></div>
+    <h2 class="rv">Antes de depositar o preprint ou o postprint: a política do periódico, no Open policy finder — busca por periódico ou editora</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_29_sherpa.jpg" width="1920" height="938" alt="Página inicial do Open policy finder da Jisc, com a busca por periódico ou editora"></div><figcaption><b>Figura 33</b> Open policy finder — openpolicyfinder.jisc.ac.uk, da Jisc, sucessor do Sherpa Romeo (captura de 09/09/2026, sem login): «escolhas confiantes em publicação em acesso aberto para autores e instituições»; busca por periódico ou editora; seções «Open access compliance» e «Transitional agreements». A página «About» devolveu 403 e não é descrita.</figcaption></figure>
+      <div>
+        <div class="flow">
+          <div class="node"><span class="nn">1</span><span class="nt">Buscar o periódico-alvo</span><span class="nd">Pelo nome do periódico ou da editora</span></div>
+          <div class="node"><span class="nn">2</span><span class="nt">Ler a política por versão</span><span class="nd">Preprint, postprint (manuscrito aceito) e versão publicada: o que pode ir a um repositório, onde e com que embargo</span></div>
+          <div class="node"><span class="nn">3</span><span class="nt">Confirmar no site do periódico</span><span class="nd">A política do próprio periódico vale sobre qualquer resumo; guarde a URL e a data no <code>DECISOES.md</code></span></div>
+          <div class="node gate"><span class="nn">4</span><span class="nt">Só então depositar</span><span class="nd">A versão permitida, no servidor permitido, e declarar o preprint na submissão</span></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O manual não afirma a política de nenhum periódico: elas mudam e diferem por versão e por área. O Open policy finder é o índice; a decisão é confirmada no site do periódico antes do clique. Quando o programa exige o depósito da tese ou do artigo no repositório institucional, a mesma consulta diz qual versão pode ir. O DOAJ aparece só pelo nome: estava bloqueado pela Cloudflare nesta data (já descrito no manual irmão de Busca).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s39" data-title="ORCID">
+  <div class="inner">
+    <div class="kicker-part rv">Preprints<span>5 de 5 · orcid.org · info.orcid.org · captura de 09/09/2026</span></div>
+    <h2 class="rv">ORCID: um identificador único e persistente, gratuito, que liga você — e não um homônimo — ao registro, ao depósito, ao preprint e ao artigo</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/ca_27_orcid.jpg" width="1920" height="938" alt="Página inicial do ORCID com a seção ORCID is for e o chamado para registrar um identificador"></div><figcaption><b>Figura 34</b> orcid.org (captura de 09/09/2026, sem login): «ORCID is for…». Open Researcher and Contributor ID: «organização global sem fins lucrativos»; «identificador único e persistente»; «pesquisadores podem criar, editar e manter um identificador e um registro ORCID gratuitamente». O registro exige conta e não foi capturado.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:230px">Onde o ORCID entra neste manual</th><th>Como</th></tr></thead><tbody>
+          <tr><td><b>OSF</b></td><td>No perfil da conta; o registro e o preprint ficam ligados a ele</td></tr>
+          <tr><td><b>Zenodo</b></td><td>«Creators» → «Add creator» busca por ORCID; o <code>deposito_zenodo.py</code> aceita <code>--orcid</code></td></tr>
+          <tr><td><b>Preprint e periódico</b></td><td>Pedido na submissão; liga a obra ao seu registro</td></tr>
+          <tr><td><b>Agências e currículo</b></td><td>Usado por agências de fomento; liga a pessoa às obras e afiliações</td></tr>
+          <tr><td><b><code>CITATION.cff</code></b></td><td>Campo <code>orcid</code> de cada autor (manual de Git)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Crie o ORCID antes do primeiro registro, em orcid.org, com o e-mail que continua seu depois do curso — é o aluno quem cria; este manual não fez login. Use o mesmo identificador em todos os serviços: é ele que junta o pré-registro, o dado com DOI, o preprint e o artigo numa única pessoa, mesmo com nome abreviado de formas diferentes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 6 ===================== -->
+<section class="slide divider" id="s40" data-title="Parte 6 · Fechar"><div class="inner"><div class="kicker-part rv">Parte 6<span>Fechar</span></div><h2 class="rv">Tudo num só plugin; erros comuns; checklist; glossário; referências; como citar, uso de IA e licença</h2><p class="rv">O agente prepara — rascunho, plano, conferência da pasta — e o aluno registra, faz o upload e clica em «Publish». Depois, o que costuma dar errado, a lista para conferir antes de cada clique irreversível, os termos e as fontes.</p></div><div class="num">06</div></section>
+
+<section class="slide" id="s41" data-title="Tudo num só plugin">
+  <div class="inner">
+    <div class="kicker-part rv">Fechar<span>1 de 7</span></div>
+    <h2 class="rv">Tudo num só plugin: a skill <code>ciencia-aberta-preregistro</code> prepara e confere; o aluno registra, deposita e publica</h2>
+    <div class="two rv">
+      <div>
+        <p class="lead">O <a href="https://plugin.mirandastech.com.br/">plugin Pesquisa MirandasTech</a> (para Claude Code e Codex) coloca os papéis dos manuais dentro do assistente, com um estado único (<code>PROGRESSO.md</code>) e um gerente — o Pesquisador — que só fecha uma fase com evidência. A skill <code>ciencia-aberta-preregistro</code> segue este manual: roda o <code>plano_gestao_dados.py</code> na fase do projeto, o <code>preregistro.py</code> com o modelo certo, e o <code>deposito_zenodo.py</code> na entrega; explica cada BLOQUEIO e AVISO; confere a política do periódico antes do preprint. Quem cria a conta, registra, faz o upload e clica em «Publish» é o aluno, na própria conta — registro e DOI são irreversíveis.</p>
+        <div class="tw"><table><thead><tr><th style="width:190px">Papel</th><th>O que faz com este manual</th><th style="width:130px">Partes</th></tr></thead><tbody>
+          <tr><td><b>Pesquisador</b></td><td>Confere que o PGD existe, que o pré-registro foi feito antes da coleta (URL e data no <code>PROGRESSO.md</code>), que o depósito passou sem bloqueio e que o DOI está no texto</td><td>Todas</td></tr>
+          <tr><td><b>Skill ciencia-aberta-preregistro</b></td><td>Gera os rascunhos, escolhe o modelo com o aluno, explica os serviços, roda os três scripts, orienta o upload e as versões</td><td>1 a 5</td></tr>
+          <tr><td><b>Metodólogo</b></td><td>Decide com o aluno o que vai no registro: hipótese, variáveis, amostra, análise</td><td>1 e 2</td></tr>
+          <tr><td><b>Orientador (uso de IA)</b></td><td>Declara o uso do assistente no registro, no depósito e no texto</td><td>Último slide</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="code"><div class="code-head">Claude Code — pedidos na pasta do projeto (o plugin lê PROGRESSO.md)</div><pre>Pesquisador, onde paramos?
+Escreva o plano de gestão de dados do projeto.
+Gere o rascunho do pré-registro no modelo AsPredicted e me diga onde registrar.
+Confira a pasta dados_para_deposito antes do upload no Zenodo e explique cada aviso.
+Qual DOI eu cito no artigo: o de conceito ou o de versão?
+O periódico X aceita preprint? Onde eu confiro?
+/pesquisa:status
+/pesquisa:proxima</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O agente nunca cria conta, nunca registra, nunca faz upload nem clica em «Publish», e nunca toca em credencial. Recusa pedidos como «registra no OSF para mim, eu passo a senha», «deposita as entrevistas completas» ou «muda o pré-registro, a hipótese era outra» — e oferece o caminho certo: o aluno registra; sem TCLE e anonimização não há depósito; mudança é emenda datada. Como neste manual, que não fez login em nenhum serviço.</p></div>
+        <div class="note"><span class="blabel">Onde cada manual entra</span><p><a href="https://metodologia.mirandastech.com.br/">Metodologia</a> decide o projeto; <a href="https://busca.mirandastech.com.br/">Busca</a> e <a href="https://prisma.mirandastech.com.br/">PRISMA</a> fazem a revisão; <a href="https://dados.mirandastech.com.br/">Dados</a> organiza e protege; <a href="https://git.mirandastech.com.br/">Git</a> versiona o código e liga ao Zenodo; este manual registra e deposita; <a href="https://manual.mirandastech.com.br/">Uso de IA</a> declara; o <a href="https://plugin.mirandastech.com.br/">plugin</a> mantém a ordem. Hub: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s42" data-title="Erros comuns">
+  <div class="inner">
+    <div class="kicker-part rv">Fechar<span>2 de 7</span></div>
+    <h2 class="rv">Erros comuns — como aparecem e como corrigir</h2>
+    <div class="tw rv"><table><thead><tr><th>Erro</th><th>Como aparece</th><th>Causa</th><th style="width:290px">Correção</th></tr></thead><tbody>
+      <tr><td>Registrar depois de ver os dados</td><td>Data do registro posterior à coleta ou à extração</td><td>«Registro quando o método estiver redondo»</td><td><span class="pill p-stop">não é pré-registro: declare como exploratório; registre o próximo estudo antes</span></td></tr>
+      <tr><td>Mudar o registro sem emenda</td><td>O artigo testa uma hipótese que não está no registro</td><td>Tentar «corrigir» o plano por fora</td><td><span class="pill p-amber">emenda datada com motivo; análise nova = exploratória</span></td></tr>
+      <tr><td>Depositar dado pessoal</td><td>CPF, nome, e-mail, gravação num arquivo do depósito</td><td>Confundir «restrito» com «anonimizado» (LGPD)</td><td><span class="pill p-stop">tirar antes do upload; BLOQUEIO do deposito_zenodo.py; só o derivado anonimizado</span></td></tr>
+      <tr><td>Depósito sem licença</td><td>Registro público que ninguém pode reutilizar</td><td>Achou que público bastava</td><td><span class="pill p-blue">CC BY 4.0 (dados, texto) ou licença de software; o Zenodo exige para arquivos públicos</span></td></tr>
+      <tr><td>DOI de versão × de conceito trocado</td><td>O leitor abre uma versão diferente da usada no artigo</td><td>Copiou o primeiro DOI que viu</td><td><span class="pill p-amber">versão nos métodos e nas referências; conceito no README</span></td></tr>
+      <tr><td>Só arquivos proprietários</td><td><code>.xlsx</code>, <code>.docx</code>, <code>.sav</code> sem versão aberta</td><td>Exportou do programa de sempre</td><td><span class="pill p-blue">incluir CSV/ODS/PDF; AVISO do script (I1/I2)</span></td></tr>
+      <tr><td>README ausente</td><td>Depósito sem dizer o que é, como foi coletado, variáveis, como citar</td><td>Pressa no upload</td><td><span class="pill p-blue">README com origem, método, dicionário de dados e citação (R1.2, R1.3)</span></td></tr>
+      <tr><td>«Publish» antes de conferir</td><td>Título errado, autor faltando, arquivo a mais — publicado</td><td>Pulou o «Preview»</td><td><span class="pill p-stop">irreversível: metadados editáveis sempre; arquivos só por 45 dias; depois, nova versão</span></td></tr>
+      <tr><td>Preprint contra a política do periódico</td><td>Submissão recusada ou pedido de retirada</td><td>Não conferiu antes de depositar</td><td><span class="pill p-amber">Open policy finder + site do periódico; declarar o preprint na submissão</span></td></tr>
+      <tr><td>Sem ORCID</td><td>Registro, depósito e artigo atribuídos a homônimos ou a nomes abreviados diferentes</td><td>Adiou o cadastro</td><td><span class="pill p-blue">criar em orcid.org (gratuito) e usar em tudo</span></td></tr>
+      <tr><td>Sandbox achando que é o real</td><td>DOI de sandbox.zenodo.org num artigo; o link não resolve</td><td>Treinou e não trocou de site</td><td><span class="pill p-stop">o aviso amarelo denuncia o Sandbox; repetir no zenodo.org</span></td></tr>
+      <tr><td>Esquecer o embargo do registro em revisão cega</td><td>O registro público revela os autores ao revisor</td><td>Registrou público «por padrão»</td><td><span class="pill p-amber">embargo (até 4 anos) + link somente-leitura anonimizado do OSF</span></td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+<section class="slide" id="s43" data-title="Checklist final">
+  <div class="inner">
+    <div class="kicker-part rv">Fechar<span>3 de 7</span></div>
+    <h2 class="rv">Checklist final: antes de registrar, antes de publicar o depósito e antes do preprint</h2>
+    <p class="lead rv">Marque conforme concluir. O estado fica salvo neste navegador — não é compartilhado nem enviado a lugar nenhum.</p>
+    <div class="check rv" id="checklist">
+      <div class="check-item"><input type="checkbox" id="c01"><label for="c01"><b>ORCID</b>Criado em orcid.org e usado no OSF, no Zenodo, no preprint e na submissão</label></div>
+      <div class="check-item"><input type="checkbox" id="c02"><label for="c02"><b>PGD</b><code>00_projeto/PLANO_GESTAO_DADOS.md</code> com as 7 seções preenchidas: o que será coletado, TCLE e LGPD, backup 3-2-1, repositório e licença</label></div>
+      <div class="check-item"><input type="checkbox" id="c03"><label for="c03"><b>Rascunho</b><code>preregistro.py</code> com o modelo certo (AsPredicted, OSF ou revisão); campos «[preencher]» respondidos e revisados com o orientador</label></div>
+      <div class="check-item"><input type="checkbox" id="c04"><label for="c04"><b>Registro antes</b>Feito pelo aluno no OSF, AsPredicted, PROSPERO ou ReBEC <em>antes</em> da coleta (ou da extração); URL, DOI e data no <code>PROGRESSO.md</code> e em <code>00_protocolo/</code></label></div>
+      <div class="check-item"><input type="checkbox" id="c05"><label for="c05"><b>Embargo e revisão cega</b>Decididos: público agora ou embargo (até 4 anos); link somente-leitura anonimizado guardado para o periódico</label></div>
+      <div class="check-item"><input type="checkbox" id="c06"><label for="c06"><b>Emendas</b>Toda mudança no plano registrada com data e motivo; análises não previstas marcadas como exploratórias no texto</label></div>
+      <div class="check-item"><input type="checkbox" id="c07"><label for="c07"><b>Ética dos dados</b>Só o que o TCLE autorizou; anonimização irreversível documentada; dado bruto e dado licenciado de terceiros fora do depósito</label></div>
+      <div class="check-item"><input type="checkbox" id="c08"><label for="c08"><b>Pasta do depósito</b>README, dicionário de dados, formatos abertos, licença escolhida; <code>deposito_zenodo.py</code> respondeu «OK nada a corrigir antes do upload»</label></div>
+      <div class="check-item"><input type="checkbox" id="c09"><label for="c09"><b>Zenodo</b>Upload feito pelo aluno no zenodo.org (não no Sandbox): campos obrigatórios, creators com ORCID, licença, «Reserve DOI», «Preview» lido, «Publish»</label></div>
+      <div class="check-item"><input type="checkbox" id="c10"><label for="c10"><b>DOIs no texto</b>DOI de versão nos métodos e nas referências; DOI de conceito no README; ambos no <code>PROGRESSO.md</code>; código com release no GitHub ligado ao Zenodo</label></div>
+      <div class="check-item"><input type="checkbox" id="c11"><label for="c11"><b>Preprint</b>Política do periódico conferida (Open policy finder + site do periódico); versão permitida depositada no servidor escolhido; preprint declarado na submissão</label></div>
+      <div class="check-item"><input type="checkbox" id="c12"><label for="c12"><b>IA declarada</b>Uso do assistente declarado no registro, no README do depósito e no texto, conforme o manual de Uso de IA</label></div>
+      <div class="check-foot"><span id="check-status">0 de 12</span><button type="button" id="check-reset">limpar</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s44" data-title="Glossário">
+  <div class="inner">
+    <div class="kicker-part rv">Fechar<span>4 de 7</span></div>
+    <h2 class="rv">Glossário</h2>
+    <p class="lead rv">Tudo que aparece no manual sem ser explicado no próprio slide.</p>
+    <div class="gl4 rv"><div><h4 style="margin-top:0">Registro e ciência aberta</h4><dl class="gl"><dt>Ciência aberta</dt><dd>«Conjunto de princípios e práticas que visam tornar a pesquisa científica de todas as áreas acessível a todos» (UNESCO, 2021): conhecimento aberto, infraestruturas, engajamento social e diálogo com outros saberes.</dd><dt>Pré-registro</dt><dd>Especificar o plano de pesquisa antecipadamente e submetê-lo a um registro (COS); hipóteses, variáveis e análises antes de ver os dados.</dd><dt>Registro (registry)</dt><dd>O serviço que guarda o plano com data e o torna imutável: OSF Registries, AsPredicted, PROSPERO, ReBEC.</dd><dt>Confirmatório × exploratório</dt><dd>Confirmatório é o que estava no registro; exploratório é o que surgiu dos dados — relatado como tal.</dd><dt>Emenda</dt><dd>Alteração do plano depois do registro, com data e motivo, sem apagar o texto original; também no <code>DECISOES.md</code>.</dd><dt>Registered Report</dt><dd>Formato de artigo em que o protocolo é revisado por pares antes de os resultados serem conhecidos; Stage 1 → aceitação em princípio → Stage 2 («mais de 300 periódicos»).</dd><dt>Aceitação em princípio</dt><dd>Compromisso do periódico de publicar o Registered Report, que «não será revogada com base nos resultados».</dd><dt>TOP Guidelines</dt><dd>Transparency and Openness Promotion: sete práticas em três níveis (Disclose, Share and Cite, Certify), do COS; TOP 2025.</dd><dt>OSF</dt><dd>Open Science Framework, do Center for Open Science: projetos, registros com DOI e preprints; gratuito; região de armazenamento fixa na criação.</dd><dt>Componente (OSF)</dt><dd>Subprojeto dentro de um projeto do OSF, com visibilidade própria.</dd><dt>Embargo</dt><dd>Prazo em que um registro ou depósito existe, com data, mas fica oculto; no OSF, até quatro anos; nos periódicos, o prazo antes de o postprint poder ficar aberto.</dd><dt>PROSPERO</dt><dd>Registro internacional de revisões sistemáticas com desfechos em saúde (CRD, York); gratuito, logado, antes da extração; mais de 495.000 revisões.</dd><dt>ReBEC</dt><dd>Registro Brasileiro de Ensaios Clínicos (Fiocruz, Ministério da Saúde, OPAS, Anvisa): estudos com seres humanos no Brasil; integra a ICTRP da OMS.</dd></dl></div><div><h4 style="margin-top:0">Dados, depósito e publicação</h4><dl class="gl"><dt>PGD (plano de gestão de dados)</dt><dd>Documento do projeto com o que será coletado, documentado, protegido, guardado, compartilhado e por quem; DMP em inglês; sete seções no <code>plano_gestao_dados.py</code>.</dd><dt>TCLE</dt><dd>Termo de Consentimento Livre e Esclarecido: o que o participante autorizou, inclusive o que pode ser compartilhado.</dd><dt>LGPD</dt><dd>Lei Geral de Proteção de Dados: dado pessoal só com base legal e finalidade; anonimizado de forma irreversível deixa de ser pessoal.</dd><dt>FAIR</dt><dd>Findable, Accessible, Interoperable, Reusable (Wilkinson et al., 2016): identificador persistente, metadados ricos, protocolo aberto, formatos e vocabulários abertos, licença e proveniência.</dd><dt>DOI</dt><dd>Digital Object Identifier: identificador persistente; no Zenodo, emitido pela DataCite ao publicar; no OSF, ao aprovar o registro.</dd><dt>DOI de conceito</dt><dd>No Zenodo, o DOI que representa todas as versões e resolve para a mais recente; cite-o para «a obra».</dd><dt>DOI de versão</dt><dd>O DOI de uma versão específica — os arquivos exatos; cite-o para reprodução exata.</dd><dt>Zenodo</dt><dd>Repositório generalista do CERN com o OpenAIRE: gratuito, 50 GB por registro, 100 arquivos por upload, DOI ao publicar, arquivos mutáveis por 45 dias.</dd><dt>Sandbox</dt><dd>sandbox.zenodo.org: a instância de testes do Zenodo; nada ali é real.</dd><dt>re3data</dt><dd>Registro global de repositórios de dados de pesquisa (3.523 na home); filtra por área, país, certificação e padrão de metadados.</dd><dt>Licença CC</dt><dd>Creative Commons: BY, BY-SA, BY-NC, BY-ND, BY-NC-SA, BY-NC-ND e CC0 (domínio público); este manual recomenda CC BY 4.0 para texto e dados.</dd><dt>Preprint · postprint</dt><dd>Preprint: o manuscrito antes da revisão por pares, com DOI e data; postprint: a versão aceita, sem a diagramação da editora.</dd><dt>Open policy finder</dt><dd>Índice da Jisc (sucessor do Sherpa Romeo) das políticas de acesso aberto dos periódicos e editoras.</dd><dt>ORCID</dt><dd>Open Researcher and Contributor ID: identificador persistente e gratuito da pessoa pesquisadora, usado por periódicos, agências, Zenodo e OSF.</dd></dl></div></div>
+  </div>
+</section>
+
+<section class="slide" id="s45" data-title="Referências (1 de 2)">
+  <div class="inner">
+    <div class="kicker-part rv">Fechar<span>5 de 7 · fontes conferidas em 09/09/2026</span></div>
+    <h2 class="rv">Referências (1 de 2): a evidência e os documentos de referência</h2>
+    <ol class="refs rv" start="1">
+      <li><span class="rt">UNESCO. <em>Recomendação sobre Ciência Aberta</em>. Paris, 2021. Adotada por 193 Estados-membros. Página «Open science». Acesso em 9 set. 2026.</span><a href="https://www.unesco.org/en/open-science">unesco.org/en/open-science</a></li>
+      <li><span class="rt">NOSEK, B. A.; EBERSOLE, C. R.; DEHAVEN, A. C.; MELLOR, D. T. The preregistration revolution. <em>PNAS</em>, 2018.</span><a href="https://doi.org/10.1073/pnas.1708274114">doi.org/10.1073/pnas.1708274114</a></li>
+      <li><span class="rt">NOSEK, B. A. et al. Promoting an open research culture. <em>Science</em>, 2015. (TOP Guidelines.)</span><a href="https://doi.org/10.1126/science.aab2374">doi.org/10.1126/science.aab2374</a></li>
+      <li><span class="rt">MUNAFÒ, M. R. et al. A manifesto for reproducible science. <em>Nature Human Behaviour</em>, 2017.</span><a href="https://doi.org/10.1038/s41562-016-0021">doi.org/10.1038/s41562-016-0021</a></li>
+      <li><span class="rt">WILKINSON, M. D. et al. The FAIR Guiding Principles for scientific data management and stewardship. <em>Scientific Data</em>, v. 3, 160018, 2016.</span><a href="https://doi.org/10.1038/sdata.2016.18">doi.org/10.1038/sdata.2016.18</a></li>
+      <li><span class="rt">ALLEN, C.; MEHLER, D. M. A. Open science challenges, benefits and tips in early career and beyond. <em>PLOS Biology</em>, 2019.</span><a href="https://doi.org/10.1371/journal.pbio.3000246">doi.org/10.1371/journal.pbio.3000246</a></li>
+      <li><span class="rt">BOOTH, A. et al. The nuts and bolts of PROSPERO: an international prospective register of systematic reviews. <em>Systematic Reviews</em>, 2012.</span><a href="https://doi.org/10.1186/2046-4053-1-2">doi.org/10.1186/2046-4053-1-2</a></li>
+      <li><span class="rt">CENTER FOR OPEN SCIENCE. <em>Preregistration</em>; <em>Registered Reports</em>; <em>TOP Guidelines</em> (TOP 2025). cos.io. Acesso em 9 set. 2026.</span><a href="https://www.cos.io/initiatives/prereg">cos.io/initiatives/prereg</a> <a href="https://www.cos.io/initiatives/registered-reports">cos.io/initiatives/registered-reports</a> <a href="https://www.cos.io/initiatives/top-guidelines">cos.io/initiatives/top-guidelines</a></li>
+      <li><span class="rt">GO FAIR. <em>FAIR Principles</em>. Acesso em 9 set. 2026.</span><a href="https://www.gofair.foundation/fair-principles">gofair.foundation/fair-principles</a></li>
+      <li><span class="rt">CREATIVE COMMONS. <em>Atribuição 4.0 Internacional (CC BY 4.0)</em>, deed em português; <em>License Chooser</em>. Acesso em 9 set. 2026.</span><a href="https://creativecommons.org/licenses/by/4.0/deed.pt-br">creativecommons.org/licenses/by/4.0/deed.pt-br</a> <a href="https://chooser-beta.creativecommons.org/">chooser-beta.creativecommons.org</a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide alt" id="s46" data-title="Referências (2 de 2)">
+  <div class="inner">
+    <div class="kicker-part rv">Fechar<span>6 de 7 · fontes conferidas em 09/09/2026</span></div>
+    <h2 class="rv">Referências (2 de 2): os serviços — OSF, AsPredicted, PROSPERO, ReBEC, Zenodo, preprints, repositórios e identificadores</h2>
+    <ol class="refs rv" start="11">
+      <li><span class="rt">CENTER FOR OPEN SCIENCE. <em>OSF</em>: home; Registries; Preprints; ajuda «Creating a project», «Create a preregistration», projetos (compartilhar). osf.io e help.osf.io (CC0). Acesso em 9 set. 2026.</span><a href="https://osf.io/">osf.io</a> <a href="https://osf.io/registries">osf.io/registries</a> <a href="https://osf.io/preprints">osf.io/preprints</a> <a href="https://help.osf.io/">help.osf.io</a></li>
+      <li><span class="rt">ASPREDICTED (Wharton Credibility Lab). <em>AsPredicted</em>. Acesso em 9 set. 2026.</span><a href="https://aspredicted.org/">aspredicted.org</a></li>
+      <li><span class="rt">CENTRE FOR REVIEWS AND DISSEMINATION, University of York (NIHR). <em>PROSPERO — International prospective register of systematic reviews</em>. Acesso em 9 set. 2026.</span><a href="https://www.crd.york.ac.uk/prospero/">crd.york.ac.uk/prospero</a></li>
+      <li><span class="rt">FIOCRUZ; MINISTÉRIO DA SAÚDE; OPAS; ANVISA. <em>ReBEC — Registro Brasileiro de Ensaios Clínicos</em>. Acesso em 9 set. 2026.</span><a href="https://ensaiosclinicos.gov.br/">ensaiosclinicos.gov.br</a></li>
+      <li><span class="rt">ZENODO (CERN; OpenAIRE). <em>Zenodo</em>: home; About; General Policies v1.0; ajuda «Create new upload», «Manage versions», «GitHub and Software»; Communities; Sandbox. Acesso em 9 set. 2026.</span><a href="https://zenodo.org/">zenodo.org</a> <a href="https://about.zenodo.org/">about.zenodo.org</a> <a href="https://about.zenodo.org/policies/">about.zenodo.org/policies</a> <a href="https://help.zenodo.org/">help.zenodo.org</a> <a href="https://sandbox.zenodo.org/">sandbox.zenodo.org</a></li>
+      <li><span class="rt">SCIELO. <em>SciELO Preprints</em>. Acesso em 9 set. 2026.</span><a href="https://preprints.scielo.org/">preprints.scielo.org</a></li>
+      <li><span class="rt">ARXIV. <em>arXiv</em>; <em>About arXiv</em>. Acesso em 9 set. 2026.</span><a href="https://arxiv.org/">arxiv.org</a> <a href="https://info.arxiv.org/about/">info.arxiv.org/about</a></li>
+      <li><span class="rt">FIGSHARE. <em>Figshare</em>. Acesso em 9 set. 2026.</span><a href="https://figshare.com/">figshare.com</a></li>
+      <li><span class="rt">RE3DATA (Karlsruhe Institute of Technology; Purdue University Libraries; DataCite). <em><span class="gterm" tabindex="0" data-t="Registro (registry)" data-d="O serviço que guarda o plano com data e o torna imutável: OSF Registries, AsPredicted, PROSPERO, ReBEC.">Registry</span> of Research Data Repositories</em>. Acesso em 9 set. 2026.</span><a href="https://www.re3data.org/">re3data.org</a></li>
+      <li><span class="rt">CALIFORNIA DIGITAL LIBRARY. <em>DMPTool</em>. Acesso em 9 set. 2026.</span><a href="https://dmptool.org/">dmptool.org</a></li>
+      <li><span class="rt">JISC. <em>Open policy finder</em> (sucessor do Sherpa Romeo). Acesso em 9 set. 2026.</span><a href="https://openpolicyfinder.jisc.ac.uk/">openpolicyfinder.jisc.ac.uk</a></li>
+      <li><span class="rt">ORCID. <em>ORCID</em>; <em>About ORCID</em>. Acesso em 9 set. 2026.</span><a href="https://orcid.org/">orcid.org</a> <a href="https://info.orcid.org/">info.orcid.org</a></li>
+    </ol>
+    <div class="note rv"><span class="blabel">Sobre as datas</span><p>Números (193 Estados, «mais de 300 periódicos», «mais de 495.000 revisões», 3.523 repositórios, «mais de três milhões de artigos»), limites (50 GB, 100 arquivos, 45 dias, embargo de 4 anos, 48 h), nomes de botão e políticas foram lidos nas páginas acima em 09/09/2026 e mudam sem aviso. Não há número de usuários do Zenodo, preço do Figshare+, itens exatos do formulário OSF Preregistration, conteúdo da «OSF Project Transition» nem política de periódico específico neste manual, porque não foram conferidos nessa data. Dataverse e DOAJ não puderam ser capturados.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s47" data-title="Como citar, uso de IA e licença">
+  <div class="inner">
+    <div class="kicker-part rv">Fechar · último slide<span>7 de 7</span></div>
+    <h2 class="rv">Como citar este manual, declaração de uso de IA e licença</h2>
+    <div class="two rv">
+      <div>
+        <div class="case"><span class="blabel">Como citar</span><p>MATIAS, J. P. M. <em>Pré-registro e ciência aberta com OSF e Zenodo: passo a passo.</em> MirandasTech, v1.0, set. 2026. CC BY 4.0.</p><span class="src">Este manual: <a href="https://cienciaaberta.mirandastech.com.br/">cienciaaberta.mirandastech.com.br</a> (PDF em <a href="https://cienciaaberta.mirandastech.com.br/manual.pdf">/manual.pdf</a>). Manuais irmãos: <a href="https://bibliometria.mirandastech.com.br/">bibliometria.mirandastech.com.br</a> · <a href="https://dados.mirandastech.com.br/">dados.mirandastech.com.br</a> · <a href="https://git.mirandastech.com.br/">git.mirandastech.com.br</a> · <a href="https://latex.mirandastech.com.br/">latex.mirandastech.com.br</a> · <a href="https://busca.mirandastech.com.br/">busca.mirandastech.com.br</a> · <a href="https://prisma.mirandastech.com.br/">prisma.mirandastech.com.br</a> · <a href="https://zotero.mirandastech.com.br/">zotero.mirandastech.com.br</a> · <a href="https://metodologia.mirandastech.com.br/">metodologia.mirandastech.com.br</a> · <a href="https://notebook.mirandastech.com.br/">notebook.mirandastech.com.br</a> · <a href="https://manual.mirandastech.com.br/">manual.mirandastech.com.br</a> · <a href="https://plugin.mirandastech.com.br/">plugin.mirandastech.com.br</a> · hub: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a></span></div>
+        <div class="rule-box"><span class="blabel">Licença</span><p>Conteúdo, capturas e os scripts <code>preregistro.py</code>, <code>deposito_zenodo.py</code> e <code>plano_gestao_dados.py</code>: CC BY 4.0 — use, copie, adapte e redistribua com atribuição. A ajuda do OSF é CC0; os metadados do Zenodo são CC0; o SciELO Preprints publica sob CC BY. OSF e COS, Zenodo, CERN e OpenAIRE, PROSPERO e CRD, AsPredicted e Wharton, ReBEC e Fiocruz, SciELO, arXiv, Creative Commons, GO FAIR, DMPTool e CDL, UNESCO, re3data, ORCID, Jisc e as demais ferramentas e serviços citados são marcas e projetos de terceiros, sem vínculo nem endosso deste manual.</p></div>
+      </div>
+      <div>
+        <div class="note"><span class="blabel">Declaração de uso de IA</span><p>Este manual foi escrito com assistência de IA (Claude, Anthropic) na estruturação, na redação, na automação das capturas de tela e na execução dos scripts, sob as regras do manual de Uso de IA na pesquisa científica. Todos os fatos, números, limites, nomes de botões e referências foram conferidos nas fontes indicadas em 09/09/2026. Nenhuma captura foi feita com login; nenhum registro, depósito ou preprint foi criado — o que exige conta é descrito pela documentação oficial. Decisões de conteúdo, seleção das fontes e responsabilidade pelo texto são do autor.</p></div>
+        <div class="colophon" style="margin-top:12px;font-size:11px">Sem garantia: interfaces, políticas, limites e formulários mudam; cada fato traz a data em que foi verificado. Quando a sua tela divergir, vale a tela. O que pode ou não ser registrado e depositado (dados de participantes, materiais licenciados, resultados sob embargo), a licença, a política do periódico e a declaração de uso de IA da sua pesquisa são seus e seguem o seu programa, o seu orientador, o comitê de ética e a biblioteca da sua instituição. Nada aqui é aconselhamento jurídico.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script>
+
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var tot = slides.length; document.getElementById('tot').textContent = tot; var ns = document.getElementById('nslides'); if (ns) ns.textContent = tot;
+  var cur = document.getElementById('cur'), prog = document.getElementById('prog');
+  var menu = document.getElementById('menu'), scrim = document.getElementById('scrim'), menubtn = document.getElementById('menubtn');
+
+  /* sumário gerado a partir dos slides */
+  var html = '', grp = '';
+  slides.forEach(function(s, i){
+    var t = s.getAttribute('data-title') || ('Slide ' + (i+1));
+    if (s.classList.contains('divider')) { html += '<div class="grp">' + t + '</div>'; return; }
+    if (s.classList.contains('cover')) { html += '<div class="grp">Início</div>'; }
+    html += '<a href="#' + s.id + '" data-i="' + i + '"><span class="n">' + String(i+1).padStart(2,'0') + '</span><span>' + t + '</span></a>';
+  });
+  document.getElementById('menulist').innerHTML = html;
+  document.getElementById('menuclose').addEventListener('click', function(){ toggleMenu(false); });
+  var links = Array.prototype.slice.call(menu.querySelectorAll('a'));
+  function toggleMenu(open){ menu.classList.toggle('open', open); scrim.classList.toggle('on', open); }
+  menubtn.addEventListener('click', function(){ toggleMenu(!menu.classList.contains('open')); });
+  scrim.addEventListener('click', function(){ toggleMenu(false); });
+  links.forEach(function(a){ a.addEventListener('click', function(){ toggleMenu(false); }); });
+
+  /* slide ativo: contador, progresso, revelação, sumário */
+  var active = 0;
+  function setActive(i){
+    active = i; cur.textContent = i + 1; prog.style.width = ((i+1)/tot*100) + '%';
+    links.forEach(function(a){ a.classList.toggle('on', +a.getAttribute('data-i') === i); });
+    var on = menu.querySelector('a.on'); if (on && menu.classList.contains('open')) on.scrollIntoView({block:'nearest'});
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.12 });
+    slides.forEach(function(s){ io.observe(s); });
+  } else { slides.forEach(function(s){ s.classList.add('in'); }); }
+  /* slide ativo = o que ocupa mais área visível */
+  var ticking = false;
+  function recompute(){
+    ticking = false; var vh = window.innerHeight, best = 0, bi = active;
+    slides.forEach(function(s, i){ var r = s.getBoundingClientRect(); var vis = Math.min(r.bottom, vh) - Math.max(r.top, 0); if (vis > best) { best = vis; bi = i; } });
+    if (bi !== active) setActive(bi);
+  }
+  window.addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(recompute); } }, { passive: true });
+  window.addEventListener('resize', recompute); recompute(); slides[0].classList.add('in');
+
+  /* ajuste de escala: cada slide cabe na tela (como num programa de apresentação) */
+  function fitAll(){
+    if (window.innerWidth <= 900) { slides.forEach(function(s){ var i = s.querySelector('.inner'); if (i) i.style.zoom = ''; s.classList.add('fit'); }); return; }
+    var avail = window.innerHeight - 52;
+    slides.forEach(function(s){
+      var inner = s.querySelector('.inner'); if (!inner || s.classList.contains('divider') || s.classList.contains('cover')) return;
+      inner.style.zoom = '1'; s.classList.remove('fit');
+      var need = inner.scrollHeight; if (need <= avail) { s.classList.add('fit'); return; }
+      var z = Math.max(0.75, avail / need); inner.style.zoom = z.toFixed(3);
+      if (inner.scrollHeight * z <= avail + 2) s.classList.add('fit');
+    });
+  }
+  window.addEventListener('resize', fitAll); window.addEventListener('load', fitAll); fitAll();
+  /* cards expansíveis abrem em janela sobreposta, sem mudar a altura do slide */
+  var modal = document.getElementById('modal'), mbody = document.getElementById('modal-body'), mtitle = document.getElementById('modal-title');
+  function closeModal(){ modal.classList.remove('on'); mbody.innerHTML = ''; }
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(ev){ if (ev.target === modal) closeModal(); });
+  document.querySelectorAll('details.more').forEach(function(d){
+    var s = d.querySelector('summary'), body = d.querySelector(':scope > div');
+    s.addEventListener('click', function(ev){
+      if (window.matchMedia('print').matches) return;
+      ev.preventDefault(); d.open = false;
+      mtitle.textContent = s.textContent.replace(/^detalhes\s*—\s*/i, '').trim() || 'detalhes';
+      mbody.innerHTML = body.innerHTML; modal.classList.add('on'); attachCopy(mbody);
+    });
+  });
+  /* botão de copiar em código, terminal e prompt */
+  function attachCopy(root){
+    root.querySelectorAll('.code, .term').forEach(function(box){
+      if (box.querySelector(':scope > .copy')) return;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'copy'; b.textContent = 'copiar'; b.setAttribute('aria-label', 'Copiar conteúdo');
+      b.addEventListener('click', function(){
+        var pre = box.querySelector('pre'); var txt = pre ? pre.innerText : box.innerText;
+        function done(){ b.textContent = 'copiado ✓'; b.classList.add('ok'); setTimeout(function(){ b.textContent = 'copiar'; b.classList.remove('ok'); }, 1600); }
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt); done(); }); } else { fallback(txt); done(); }
+      });
+      box.appendChild(b);
+    });
+  }
+  function fallback(txt){ var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e){} document.body.removeChild(ta); }
+  attachCopy(document);
+  /* popover do glossário */
+  var gpop = document.getElementById('gpop'), gcur = null;
+  function showPop(el){ gpop.innerHTML = '<b>' + el.getAttribute('data-t') + '</b>' + el.getAttribute('data-d'); gpop.classList.add('on');
+    var r = el.getBoundingClientRect(), pw = Math.min(340, window.innerWidth - 24); gpop.style.maxWidth = pw + 'px';
+    var left = Math.max(12, Math.min(r.left, window.innerWidth - pw - 12)); gpop.style.left = left + 'px';
+    var ph = gpop.offsetHeight; var top = r.bottom + 8; if (top + ph > window.innerHeight - 8) top = Math.max(8, r.top - ph - 8); gpop.style.top = top + 'px'; gcur = el; }
+  function hidePop(){ gpop.classList.remove('on'); gcur = null; }
+  document.querySelectorAll('.gterm').forEach(function(el){
+    el.addEventListener('mouseenter', function(){ showPop(el); }); el.addEventListener('mouseleave', hidePop);
+    el.addEventListener('focus', function(){ showPop(el); }); el.addEventListener('blur', hidePop);
+    el.addEventListener('click', function(ev){ ev.stopPropagation(); if (gcur === el) hidePop(); else showPop(el); });
+  });
+  document.addEventListener('click', function(){ if (gcur) hidePop(); }); window.addEventListener('scroll', function(){ if (gcur) hidePop(); }, { passive: true });
+
+  function go(i){ i = Math.max(0, Math.min(tot-1, i)); window.scrollTo({ top: slides[i].offsetTop, behavior: 'smooth' }); }
+  document.getElementById('prev').addEventListener('click', function(){ go(active-1); });
+  document.getElementById('next').addEventListener('click', function(){ go(active+1); });
+  document.addEventListener('keydown', function(ev){
+    if (ev.target && /input|textarea|select/i.test(ev.target.tagName)) return;
+    if (ev.key === 'ArrowDown' || ev.key === 'PageDown' || ev.key === ' ' || ev.key === 'ArrowRight') { ev.preventDefault(); go(active+1); }
+    else if (ev.key === 'ArrowUp' || ev.key === 'PageUp' || ev.key === 'ArrowLeft') { ev.preventDefault(); go(active-1); }
+    else if (ev.key === 'Home') { go(0); } else if (ev.key === 'End') { go(tot-1); }
+    else if (ev.key === 'Escape') { toggleMenu(false); closeModal(); }
+  });
+
+  /* checklist — conveniência por leitor, só neste navegador */
+  var KEY = 'mirandastech-ciencia-aberta-checklist-v1';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checklist input[type=checkbox]'));
+  var status = document.getElementById('check-status');
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ return {}; } }
+  function save(st){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
+  function paint(){ var n = 0; boxes.forEach(function(b){ var it = b.closest('.check-item'); if (b.checked) { n++; it.classList.add('done'); } else { it.classList.remove('done'); } }); if (status) status.textContent = n + ' de ' + boxes.length; }
+  var st = load(); boxes.forEach(function(b){ b.checked = !!st[b.id]; b.addEventListener('change', function(){ var s = load(); s[b.id] = b.checked; save(s); paint(); }); }); paint();
+  var reset = document.getElementById('check-reset'); if (reset) reset.addEventListener('click', function(){ boxes.forEach(function(b){ b.checked = false; }); save({}); paint(); });
+})();
+</script>
+<script>
+(function(){
+  var lb = document.createElement('div'); lb.className = 'lightbox'; lb.setAttribute('role','dialog'); lb.setAttribute('aria-modal','true');
+  lb.innerHTML = '<span class="lb-hint">clique fora ou Esc para fechar</span><button type="button" class="lb-close" aria-label="Fechar">×</button><figure style="margin:0;display:contents"><img alt=""><figcaption hidden></figcaption></figure>';
+  document.body.appendChild(lb);
+  var img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
+  function open(src, alt, text){ img.src = src; img.alt = alt || ''; if (text) { cap.textContent = text; cap.hidden = false; } else { cap.hidden = true; } lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function close(){ lb.classList.remove('on'); img.removeAttribute('src'); document.body.style.overflow = ''; }
+  document.addEventListener('click', function(ev){
+    var t = ev.target;
+    if (t.tagName === 'IMG' && t.closest('.shot')) {
+      var fig = t.closest('figure'), fc = fig && fig.querySelector('figcaption');
+      open(t.currentSrc || t.src, t.alt, fc ? fc.textContent.replace(/\s+/g,' ').trim() : '');
+    }
+  });
+  lb.addEventListener('click', function(ev){ if (ev.target !== img) close(); });
+  document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape' && lb.classList.contains('on')) close(); });
+})();
+</script>
